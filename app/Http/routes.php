@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,22 +9,24 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+
+// 根路径
 Route::get('/', function () {
-    return view('index/index');
+    if(Auth::check()){
+        return view('index/index');
+    }else{
+        return redirect()->route('login');
+    }
 });
 
+// 项目首页
 Route::get('home',function(){
-    return view('index/index');
+    if(Auth::check()){
+        return view('index/index');
+    }else{
+        return redirect()->route('login');
+    }
 })->name('home');
-
-// // 认证路由...
-// Route::get('auth/login', 'Auth\AuthController@getLogin');
-// Route::post('auth/login', 'Auth\AuthController@postLogin');
-// Route::get('auth/logout', 'Auth\AuthController@getLogout');
-//
-// // 注册路由...
-// Route::get('auth/register', 'Auth\AuthController@getRegister');
-// Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 # 登陆会话
 Route::get('login', 'loginController@create')->name('login');
