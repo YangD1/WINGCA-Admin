@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
+use App\User;
 
 class registerController extends Controller
 {
+    /**
+     * 
+     */
+    function __construct(){
+        
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,10 +43,7 @@ class registerController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * 提交注册用户
      */
     public function store(Request $request)
     {
@@ -53,25 +58,17 @@ class registerController extends Controller
             'password.required' => '请填写正确的密码',
         ]);
 
-        // 模型方法来存数据
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'tel' => $request->tel,
-            'phone' => $request->phone,
-            'wechat' => $request->wechat,
-            'purview' => $request->purview
         ]);
 
-        //  查阅权限设置
-        $can_read_user_arr = $request->can_read_user;
-        array_push($can_read_user_arr,$user->id);
-        $can_read_user = implode(',',$can_read_user_arr);
-        $user->update(['can_read_user'=>$can_read_user]);
-
-        session()->flash('success', '新用户创建成功！');
-        return redirect()->route('userList');
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            // 认证通过...
+            session()->flash('success', '创建成功！');
+            return redirect()->intended('home');
+        }
     }
 
     /**

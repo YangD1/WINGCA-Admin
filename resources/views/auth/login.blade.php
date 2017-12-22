@@ -26,7 +26,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4" style="float: right">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">登陆</button>
                     </div>
                 </div>
             </form>
@@ -49,6 +49,11 @@
 @foreach($errors -> all() as $error)
 toastr.warning("{{ $error }}", '登陆失败');
 @endforeach
+@endif
+
+
+@if(Session::has('danger'))
+    toastr.warning("{{ Session::get('danger') }}");
 @endif
 </script>
 </body>

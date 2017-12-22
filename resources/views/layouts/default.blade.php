@@ -10,8 +10,7 @@
 
     <!-- Logo -->
     <a href="javascript:void(0);" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><img src="/statics/images/wingca_logo.png" alt=""></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>WINGCA</b> Layout</span>
     </a>

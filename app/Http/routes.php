@@ -32,3 +32,7 @@ Route::get('home',function(){
 Route::get('login', 'loginController@create')->name('login');
 Route::post('login', 'loginController@store')->name('login');
 Route::get('logout', 'loginController@destroy')->name('logout');
+
+# 注册
+Route::get('register', 'registerController@create')->name('register');
+Route::post('register', 'registerController@store')->name('register');
