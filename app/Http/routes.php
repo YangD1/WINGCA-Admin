@@ -36,3 +36,8 @@ Route::get('logout', 'loginController@destroy')->name('logout');
 # 注册
 Route::get('register', 'registerController@create')->name('register');
 Route::post('register', 'registerController@store')->name('register');
+
+Route::group(['prefix' => 'menu'],function(){
+    Route::resource('menu', 'menuController');
+    Route::post('getMenu','menuController@getMenu')->name('getMenu');
+});
