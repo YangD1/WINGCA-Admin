@@ -205,6 +205,24 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
+        @foreach( $menus as $v )
+            @if( $v->parent_id == 0 )
+            <li><a href="{{ route('home') }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
+            @else
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#">Link in level 2</a></li>
+                <li><a href="#">Link in level 2</a></li>
+              </ul>
+            </li>
+            @endif
+
+        @endforeach
         <!-- <li><a href="{{ route('home') }}"><i class="fa fa-home"></i> <span>Home</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
         <li class="treeview">
@@ -346,41 +364,41 @@ $.ajaxSetup({
 });
 
 // $(function(){
-  $.ajax({
-    url: "{{ route('getMenu') }}",
-    type: 'POST',
-    success: function(data){
-        var menus = "";
-        var obj = data.length > 0 ? $.parseJSON(data) : [];
-        if(obj){
-          $.each(obj,function(key,item){
-          if(item.childMenu){
-            menus += `
-               <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>${item.name}</span>
-                  <span class="pull-right-container">
-                      <i class="fa fa-${item.icon} pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">`;
-            $.each(item.childMenu,function(key,child_item){
-              menus += `
-                <li><a href="#">${child_item.name}</a></li>`; 
-            });
-            menus +=`
-                </ul>
-              </li>
-            `;
-          }else{
-            menus += `<li><a href="${item.url}"><i class="fa fa-${item.icon}"></i> <span>${item.name}</span></a></li>`;
-          }
-        });
-        $('.header').after(menus);
-        // 相应的菜单方法
-      }
-        
-    }
-  }) 
+  // $.ajax({
+  //   url: "{{ route('getMenu') }}",
+  //   type: 'POST',
+  //   success: function(data){
+  //       var menus = "";
+  //       var obj = data.length > 0 ? $.parseJSON(data) : [];
+  //       if(obj){
+  //         $.each(obj,function(key,item){
+  //         if(item.childMenu){
+  //           menus += `
+  //              <li class="treeview">
+  //               <a href="#"><i class="fa fa-link"></i> <span>${item.name}</span>
+  //                 <span class="pull-right-container">
+  //                     <i class="fa fa-${item.icon} pull-right"></i>
+  //                   </span>
+  //               </a>
+  //               <ul class="treeview-menu">`;
+  //           $.each(item.childMenu,function(key,child_item){
+  //             menus += `
+  //               <li><a href="#">${child_item.name}</a></li>`;
+  //           });
+  //           menus +=`
+  //               </ul>
+  //             </li>
+  //           `;
+  //         }else{
+  //           menus += `<li><a href="${item.url}"><i class="fa fa-${item.icon}"></i> <span>${item.name}</span></a></li>`;
+  //         }
+  //       });
+  //       $('.header').after(menus);
+  //       // 相应的菜单方法
+  //     }
+  //
+  //   }
+  // })
 // });
 </script>
 </body>

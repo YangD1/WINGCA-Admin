@@ -9,24 +9,27 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+use Illuminate\Http\Request;
 
 // 根路径
-Route::get('/', function () {
+Route::get('/',['middleware' => 'prototype', function (Request $request) {
     if(Auth::check()){
-        return view('index/index');
+        $menus = $request->menus;
+        return view('index/index',compact('menus'));
     }else{
         return redirect()->route('login');
     }
-});
+}]);
 
 // 项目首页
-Route::get('home',function(){
+Route::get('home',['middleware' => 'prototype',function (Request $request){
     if(Auth::check()){
-        return view('index/index');
+        $menus = $request->menus;
+        return view('index/index',compact('menus'));
     }else{
         return redirect()->route('login');
     }
-})->name('home');
+}])->name('home');
 
 # 登陆会话
 Route::get('login', 'loginController@create')->name('login');
