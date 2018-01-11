@@ -23,7 +23,7 @@ class loginController extends Controller
      */
     public function create()
     {
-        if(Auth::check()){
+        if( Auth::check() ){
             $url = route('home');
             header("Location: $url");
             exit;
@@ -49,7 +49,7 @@ class loginController extends Controller
        ];
 
        // 用户认证
-       if (Auth::attempt($credentials)) {
+       if ( Auth::attempt($credentials) ) {
            session()->flash('success', '欢迎回来！');
            return redirect()->route('home', [Auth::user()]);
        } else {

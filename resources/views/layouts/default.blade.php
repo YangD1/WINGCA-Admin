@@ -207,7 +207,7 @@
         <!-- Optionally, you can add icons to the links -->
         @foreach( $menus as $v )
             @if( $v->parent_id == 0 )
-            <li><a href="{{ route('home') }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
+            <li><a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
             @else
             <li class="treeview">
               <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
