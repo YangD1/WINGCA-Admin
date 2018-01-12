@@ -206,20 +206,21 @@
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
         @foreach( $menus as $v )
-            @if( $v->parent_id == 0 )
-            <li><a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
-            @else
+            @if(!$v->child_menus->isEmpty())
             <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+              <a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                   </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="#">Link in level 2</a></li>
-                <li><a href="#">Link in level 2</a></li>
+                @foreach($v->child_menus as $value)
+                <li><a href="{{ $value->url }}">{{ $value->name }}</a></li>
+                @endforeach
               </ul>
             </li>
+            @else
+            <li><a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
             @endif
 
         @endforeach
