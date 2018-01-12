@@ -14,9 +14,9 @@ class CreateNewTableMenus extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('name',20)->comment('菜单名称');
-            $table->char('icon',20)->comment('字体图标名称');
-            $table->char('url',50)->default('#')->comment('参数及路由');
+            $table->string('name',20)->comment('菜单名称');
+            $table->string('icon',20)->comment('字体图标名称');
+            $table->string('url',50)->default('#')->comment('参数及路由');
             $table->integer('parent_id')->default(0)->comment('父级id');
             $table->integer('menu_order')->default(0)->comment('菜单排序');
             $table->timestamps();
