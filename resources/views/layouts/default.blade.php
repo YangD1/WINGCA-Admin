@@ -203,8 +203,11 @@
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
-        <!-- Optionally, you can add icons to the links -->
+        <li class="@if($active == 'home') active @endif">
+            <a href="/home"><i class="fa fa-home"></i>主页</a>
+        </li>
+        <!-- 自定义项目 -->
+        <li class="header">功能菜单</li>
         @foreach( $menus as $v )
             @if(!$v->child_menus->isEmpty())
             <li class="treeview">
@@ -229,6 +232,7 @@
             @endif
 
         @endforeach
+        <li class="header">系统设置</li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -356,6 +360,8 @@ $.ajaxSetup({
     }
 });
 
+// 当元素被选中 自动展开父级栏目
+$('.sidebar-menu').find('.active').parents('.treeview').addClass('active menu-open');
 </script>
 </body>
 </html>

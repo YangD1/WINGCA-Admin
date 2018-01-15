@@ -26,7 +26,7 @@ Route::get('/',['middleware' => 'prototype', function (Request $request) {
 Route::get('home',['middleware' => 'prototype',function (Request $request){
     if(Auth::check()){
         $menus = $request->menus;
-        $active = "menus";
+        $active = "home";
         return view('index/index',compact('menus','active'));
     }else{
         return redirect()->route('login');
