@@ -248,8 +248,7 @@
         <small>@yield('pageSmallHeader','No Page Small Header')</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
+        <li id="breadcrumb"><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
       </ol>
     </section>
 
@@ -362,6 +361,16 @@ $.ajaxSetup({
 
 // 当元素被选中 自动展开父级栏目
 $('.sidebar-menu').find('.active').parents('.treeview').addClass('active menu-open');
+
+// breadcrumb 导航
+var menus = $('.sidebar-menu').find('li.active > a');
+for(var i=menus.length - 1; i >= 0; i-- ){
+    if(i == 0){
+        $('#breadcrumb').after(`<li><a href="${menus[i].href}">${menus[i].innerText}</a></li>`);
+    }else{
+        $('#breadcrumb').after(`<li class="active">${menus[i].innerText}</li>`);
+    }
+}
 </script>
 </body>
 </html>
