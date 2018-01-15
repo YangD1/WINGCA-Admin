@@ -14,11 +14,13 @@ class MenusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         $title = "菜单管理";
-        return view("sets/menus/index",compact('title'));
+        $menus = $request->menus;
+        $active = 'menus';
+        return view("sets/menus/index",compact('title','menus','active'));
     }
 
     /**

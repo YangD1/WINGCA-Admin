@@ -15,7 +15,8 @@ use Illuminate\Http\Request;
 Route::get('/',['middleware' => 'prototype', function (Request $request) {
     if(Auth::check()){
         $menus = $request->menus;
-        return view('index/index',compact('menus'));
+        $active = "home";
+        return view('index/index',compact('menus','active'));
     }else{
         return redirect()->route('login');
     }
@@ -25,7 +26,8 @@ Route::get('/',['middleware' => 'prototype', function (Request $request) {
 Route::get('home',['middleware' => 'prototype',function (Request $request){
     if(Auth::check()){
         $menus = $request->menus;
-        return view('index/index',compact('menus'));
+        $active = "menus";
+        return view('index/index',compact('menus','active'));
     }else{
         return redirect()->route('login');
     }
@@ -41,7 +43,4 @@ Route::get('register', 'registerController@create')->name('register');
 Route::post('register', 'registerController@store')->name('register');
 
 // 菜单管理路由
-Route::group(['prefix'=>'menus'],function(){
-    Route::resource('menu','menuController');
-    Route::post('getMenu','menuController@getMenu')->name('getMenu');
-});
+Route::resource('menus','MenusController');

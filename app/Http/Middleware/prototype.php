@@ -38,10 +38,7 @@ class prototype
             //     }
             // }
             $request->menus = $parent_menus;
-        }else{
-            return redirect()->route('login');
         }
-
         return $next($request);
     }
 }

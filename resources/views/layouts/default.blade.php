@@ -215,28 +215,20 @@
               </a>
               <ul class="treeview-menu">
                 @foreach($v->child_menus as $value)
-                <li><a href="{{ $value->url }}">{{ $value->name }}</a></li>
+                <li class="@if($active == $value->name_index) active @endif">
+                    <a href="{{ $value->url }}">
+                        <i class="fa fa-circle-o"></i>
+                        {{ $value->name }}
+                    </a>
+                </li>
                 @endforeach
               </ul>
             </li>
             @else
-            <li><a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
+            <li class="@if($active == $v->name_index) active @endif"><a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
             @endif
 
         @endforeach
-        <!-- <li><a href="{{ route('home') }}"><i class="fa fa-home"></i> <span>Home</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li> -->
       </ul>
       <!-- /.sidebar-menu -->
     </section>
