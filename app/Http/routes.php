@@ -40,7 +40,8 @@ Route::get('logout', 'loginController@destroy')->name('logout');
 Route::get('register', 'registerController@create')->name('register');
 Route::post('register', 'registerController@store')->name('register');
 
-Route::group(['prefix' => 'menu'],function(){
-    Route::resource('menu', 'menuController');
+// 菜单管理路由
+Route::group(['prefix'=>'menus'],function(){
+    Route::resource('menu','menuController');
     Route::post('getMenu','menuController@getMenu')->name('getMenu');
 });
