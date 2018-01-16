@@ -8,12 +8,12 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 
+use App\Models\Menu;
+
 class MenusController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     *  菜单列表
      */
     public function index(Request $request)
     {
@@ -22,7 +22,8 @@ class MenusController extends Controller
             $title = "菜单管理";
             $menus = $request->menus;
             $active = 'menus';
-            return view("sets/menus/index",compact('title','menus','active'));
+            $datas = Menu::paginate(14);
+            return view("sets/menus/index",compact('title','menus','active','datas'));
         }else{
             return redirect()->route('login');
         }
