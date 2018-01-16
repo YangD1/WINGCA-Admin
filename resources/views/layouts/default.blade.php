@@ -12,7 +12,7 @@
     <a href="javascript:void(0);" class="logo">
       <span class="logo-mini"><img src="/statics/images/wingca_logo.png" alt=""></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>WINGCA</b> Layout</span>
+      <span class="logo-lg"><b>WINGCA</b> Admin</span>
     </a>
 
     <!-- Header Navbar -->
@@ -156,10 +156,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="#" class="btn btn-default btn-flat">个人信息</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{{ route('logout') }}" class="btn btn-danger btn-flat">退出登录</a>
                 </div>
               </li>
             </ul>
@@ -179,6 +179,7 @@
     <section class="sidebar">
 
       <!-- Sidebar user panel (optional) -->
+      <!-- 如果需要聊天功能下面样式会用到 -->
       <!-- <div class="user-panel">
         <div class="pull-left image">
           <img src="/statics/plugin/adminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
@@ -204,7 +205,10 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="@if($active == 'home') active @endif">
-            <a href="/home"><i class="fa fa-home"></i>主页</a>
+            <a href="/home">
+                <i class="fa fa-home"></i>
+                <span>主页</span>
+            </a>
         </li>
         <!-- 自定义项目 -->
         <li class="header">功能菜单</li>
@@ -233,6 +237,12 @@
 
         @endforeach
         <li class="header">系统设置</li>
+        <li class="@if($active == 'menus') active @endif">
+            <a href="/menus">
+                <i class="fa fa-hdd-o"></i>
+                <span>菜单管理</span>
+            </a>
+        </li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

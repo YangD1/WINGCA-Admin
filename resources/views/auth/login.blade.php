@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     @include('layouts._header')
     <link rel="stylesheet" href="/statics/plugin/login/login.css">
 </head>
-
 <body class="hold-transition login-page" style="background: url('/statics/plugin/login/b1.jpg'); background-size: cover;">
     <div class="login-box">
         <div class="login-logo">

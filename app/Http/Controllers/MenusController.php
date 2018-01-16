@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
 
 class MenusController extends Controller
 {
@@ -17,10 +18,14 @@ class MenusController extends Controller
     public function index(Request $request)
     {
         //
-        $title = "菜单管理";
-        $menus = $request->menus;
-        $active = 'menus';
-        return view("sets/menus/index",compact('title','menus','active'));
+        if(Auth::check()){
+            $title = "菜单管理";
+            $menus = $request->menus;
+            $active = 'menus';
+            return view("sets/menus/index",compact('title','menus','active'));
+        }else{
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -88,4 +93,5 @@ class MenusController extends Controller
     {
         //
     }
+
 }

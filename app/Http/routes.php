@@ -11,6 +11,15 @@
 */
 use Illuminate\Http\Request;
 
+# 登陆会话
+Route::get('login', 'loginController@create')->name('login');
+Route::post('login', 'loginController@store')->name('login');
+Route::get('logout', 'loginController@destroy')->name('logout');
+
+# 注册
+Route::get('register', 'registerController@create')->name('register');
+Route::post('register', 'registerController@store')->name('register');
+
 // 根路径
 Route::get('/',['middleware' => 'prototype', function (Request $request) {
     if(Auth::check()){
@@ -32,15 +41,6 @@ Route::get('home',['middleware' => 'prototype',function (Request $request){
         return redirect()->route('login');
     }
 }])->name('home');
-
-# 登陆会话
-Route::get('login', 'loginController@create')->name('login');
-Route::post('login', 'loginController@store')->name('login');
-Route::get('logout', 'loginController@destroy')->name('logout');
-
-# 注册
-Route::get('register', 'registerController@create')->name('register');
-Route::post('register', 'registerController@store')->name('register');
 
 // 菜单管理路由
 Route::resource('menus','MenusController');
