@@ -48,6 +48,7 @@ class MenusController extends Controller
     public function store(Request $request)
     {
         //
+        dd('添加新的menu');
     }
 
     /**
@@ -82,6 +83,7 @@ class MenusController extends Controller
     public function update(Request $request, $id)
     {
         //
+        dd('在这里更新menu信息');
     }
 
     /**
@@ -94,5 +96,22 @@ class MenusController extends Controller
     {
         //
     }
+
+    /**
+     * 调用menus信息
+     * 请求：id - 操作的menu id
+     * 返回：相应的menu数据（json）
+     */
+     public function menu_info(Request $request){
+        $data = Menu::find($request->id);
+        echo json_encode($data);
+     }
+
+    /**
+     * 删除menus信息
+     */
+     public function menu_del(Reuqest $request){
+         echo "删除菜单".$request->id;
+     }
 
 }

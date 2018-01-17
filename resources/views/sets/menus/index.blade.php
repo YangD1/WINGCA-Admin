@@ -8,7 +8,7 @@
         <div class="box">
             <div class="box-header">
                 <div class="btn-group">
-                    <button type="button" data-toggle="modal" data-target="#modal-add" class="btn btn-success">添加菜单</button>
+                    <button type="button" data-toggle="modal" data-target="#menu-add" class="btn btn-success">添加菜单</button>
                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
@@ -47,15 +47,15 @@
                                     <td>{{ $v->url }}</td>
                                     <td>{{ $v->parent_id }}</td>
                                     <td><i class="fa fa-{{ $v->icon }}"></i> {{ $v->icon }}</td>
-                                    <td style="text-align: center">
+                                    <td>
                                         <div class="btn-group">
-                                          <button type="button" class="btn btn-sm btn-warning">查看</button>
+                                          <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" data-toggle="modal" data-target="#menu-info">查看/修改</button>
                                           <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
                                             <span class="caret"></span>
                                             <span class="sr-only">Toggle Dropdown</span>
                                           </button>
                                           <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#" data-toggle="modal" data-target="#modal-default">删除</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#menu-del">删除</a></li>
                                           </ul>
                                         </div>
                                     </td>
@@ -72,8 +72,80 @@
     </div>
 </div>
 
+
+<!-- 查看/修改 弹窗 -->
+<div class="modal fade" id="menu-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">【菜单名称】</h4>
+      </div>
+      <form method="POST" action="{{ route('menus.update') }}">
+      {{ method_field('PATCH') }}
+      {{ csrf_field() }}
+      <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" name="id" value="">
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <label>名称:</label>
+                    <input type="text" name="name" class="form-control" placeholder="菜单名称">
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <label>url:</label>
+                    <input type="text" name="url" class="form-control" placeholder="填写有效的路径">
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <label>icon: <small><a href="" target="_blank">查看相关的图标列表</a></small></label>
+                    <input type="text" name="icon" class="form-control" placeholder="填写图标名称">
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <label>菜单索引：</label>
+                    <input type="text" name="name_index" class="form-control" placeholder="填写英文的菜单索引">
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <label>父级栏目:</label>
+                    <input type="text" name="parent_id" class="form-control" placeholder="选择父级菜单，默认为一级菜单">
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn btn-success">更新</button>
+      </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!-- 删除弹窗 -->
-<div class="modal fade" id="modal-default">
+<div class="modal fade" id="menu-del">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -86,7 +158,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary">确认删除</button>
+        <button type="button" class="btn btn-danger" onclick="del()">确认删除</button>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -96,7 +168,7 @@
 <!-- /.modal -->
 
 <!-- 添加弹窗 -->
-<div class="modal fade" id="modal-add">
+<div class="modal fade" id="menu-add">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -104,58 +176,55 @@
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">添加菜单</h4>
       </div>
-      <form action="">
+      <form method="post" action="{{ route('menus.store') }}">
+      {{ csrf_field() }}
       <div class="modal-body">
 
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <label>名称:</label>
-                    <input type="text" class="form-control" placeholder="菜单名称">
+                    <input type="text" name="name" class="form-control" placeholder="菜单名称">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>名称:</label>
-                    <input type="text" class="form-control" placeholder="菜单名称">
+                    <label>url:</label>
+                    <input type="text" name="url" class="form-control" placeholder="填写有效的路径">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>名称:</label>
-                    <input type="text" class="form-control" placeholder="菜单名称">
+                    <label>icon: <small><a href="" target="_blank">查看相关的图标列表</a></small></label>
+                    <input type="text" name="icon" class="form-control" placeholder="填写图标名称">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>名称:</label>
-                    <input type="text" class="form-control" placeholder="菜单名称">
+                    <label>菜单索引：</label>
+                    <input type="text" name="name_index" class="form-control" placeholder="填写英文的菜单索引">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
-            <!-- <div class="form-group">
-                <label>url:</label>
-                <input type="text" class="form-control" placeholder="菜单名称">
-            </div>
             <div class="form-group">
-                <label>菜单设置:</label>
-                <input type="text" class="form-control" placeholder="菜单名称">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <label>父级栏目:</label>
+                    <input type="text" name="parent_id" class="form-control" placeholder="选择父级菜单，默认为一级菜单">
+                </div>
+                <div class="col-sm-1"></div>
             </div>
-            <div class="form-group">
-                <label>icon:</label>
-                <input type="text" class="form-control" placeholder="菜单名称">
-            </div> -->
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary">添加</button>
+        <button type="submit" class="btn btn-primary">添加</button>
       </div>
       </form>
     </div>
@@ -166,15 +235,38 @@
 <!-- /.modal -->
 
 <script>
-$(function(){
-    $.ajax({
-        url: "",
-        data: {},
-        success: function(data){
+// 删除菜单项目
+let menu_del = function(id){
+    // 删除也可以做个表单 直接请求到 MenusController 的 destroy 方法来进行删除
+    // $.ajax({
+    //     url: "",
+    //     data: {},
+    //     success: function(data){
+    //
+    //     }
+    // });
+    console.log('删除当前菜单项目');
+}
 
+// 查看菜单项目
+let menu_info = function(id){
+
+    $.ajax({
+        url: "{{ route('menu_info') }}",
+        data: {id: id},
+        type: "POST",
+        success: function(data){
+            data = JSON.parse(data);
+            console.log(data);
+            $('#menu-info').find("input[name='id']").val(data.id);
+            $('#menu-info').find("input[name='name']").val(data.name);
+            $('#menu-info').find("input[name='icon']").val(data.icon);
+            $('#menu-info').find("input[name='url']").val(data.url);
+            $('#menu-info').find("input[name='name_index']").val(data.name_index);
+            $('#menu-info').find("input[name='parent_id']").val(data.parent_id);
         }
     });
-});
+}
 </script>
 
 
