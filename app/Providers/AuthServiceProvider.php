@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Menu; // menu模型
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -14,6 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        \App\Models\Menu::class => \App\Policies\MenuPolicy::class
     ];
 
     /**

@@ -104,6 +104,8 @@ class MenusController extends Controller
      */
      public function menu_info(Request $request){
         $data = Menu::find($request->id);
+         $menus = Menu::findOrFail($request->id);
+          $this->authorize('update',$menus);
         echo json_encode($data);
      }
 
