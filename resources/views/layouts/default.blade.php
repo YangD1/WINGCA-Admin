@@ -5,10 +5,6 @@
 </head>
 <body class="hold-transition skin-black sidebar-mini">
 <script type="text/javascript">
-@if (session('success'))
-  toastr.success("{{ session('success') }}");
-@endif
-
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -370,6 +366,9 @@ $.ajaxSetup({
 
 @include("layouts._footer")
 <script type="text/javascript">
+@if (session('success'))
+  toastr.success("{{ session('success') }}");
+@endif
 
 // 当元素被选中 自动展开父级栏目
 $('.sidebar-menu').find('.active').parents('.treeview').addClass('active menu-open');

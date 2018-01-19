@@ -26,6 +26,9 @@
 <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+<!-- select 2 -->
+<link rel="stylesheet" href="/statics/plugin/select2/select2.css">
+
 <link rel="stylesheet" href="/statics/css/main.min.css">
 <!-- jQuery 3 -->
 <script src="/statics/plugin/adminLTE/bower_components/jquery/dist/jquery.min.js"></script>

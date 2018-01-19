@@ -44,7 +44,5 @@ Route::get('home',['middleware' => 'prototype',function (Request $request){
 
 // 菜单管理路由
 Route::resource('menus','MenusController');
-// 菜单删除
-Route::post('menu_del','MenusController@menu_del')->name('menu_del');
 // 菜单信息
 Route::post('menu_info','MenusController@menu_info')->name('menu_info');

@@ -23,16 +23,16 @@ class MenusController extends Controller
             $menus = $request->menus;
             $active = 'menus';
             $datas = Menu::paginate(14);
-            return view("sets/menus/index",compact('title','menus','active','datas'));
+
+            $parent_data = Menu::whereRaw('parent_id = 0')->get();
+            return view("sets/menus/index",compact('title','menus','active','datas','parent_data'));
         }else{
             return redirect()->route('login');
         }
     }
 
     /**
-     * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -40,61 +40,56 @@ class MenusController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * 提交新的 menu 项目
      */
     public function store(Request $request)
     {
         //
-        dd('添加新的menu');
+        $data = [
+            'name' => $request->name,
+            'url' => $request->url,
+            'icon' => $request->icon,
+            'name_index' => $request->name_index,
+            'parent_id' => $request->parent_id
+        ];
+        Menu::create($data);
+        session()->flash('success','添加成功');
+        return redirect()->route('menus.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
-        dd('在这里更新menu信息');
+        $data = [
+            'name' => $request->name,
+            'url' => $request->url,
+            'icon' => $request->icon,
+            'name_index' => $request->name_index,
+            'parent_id' => $request->parent_id
+        ];
+        Menu::find($request->id)->update($data);
+        session()->flash('success','更新成功');
+        return redirect()->route('menus.index');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * 删除 menu 项目
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Menu::find($request->id)->delete();
+        session()->flash('success','删除成功');
+        return redirect()->route('menus.index');
     }
 
     /**
@@ -104,16 +99,11 @@ class MenusController extends Controller
      */
      public function menu_info(Request $request){
         $data = Menu::find($request->id);
-         $menus = Menu::findOrFail($request->id);
-          $this->authorize('update',$menus);
-        echo json_encode($data);
-     }
+        // 用户授权
+        $menus = Menu::findOrFail($request->id);
+        $this->authorize('update',$menus);
 
-    /**
-     * 删除menus信息
-     */
-     public function menu_del(Reuqest $request){
-         echo "删除菜单".$request->id;
+        echo json_encode($data);
      }
 
 }

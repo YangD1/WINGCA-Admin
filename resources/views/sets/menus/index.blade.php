@@ -12,13 +12,14 @@
                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                    <ul class="dropdown-menu" role="menu">
+                    </button>
+                  <!-- 拓展菜单 -->
+                    <!-- <ul class="dropdown-menu" role="menu">
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Separated link</a></li>
-                    </ul>
+                    </ul> -->
                 </div>
                 <small>&nbsp;&nbsp;&nbsp;&nbsp;Tip: 注意表单展示的时候根据宽度尺寸来隐藏一些显示内容</small>
             </div>
@@ -55,7 +56,7 @@
                                             <span class="sr-only">Toggle Dropdown</span>
                                           </button>
                                           <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#" data-toggle="modal" data-target="#menu-del">删除</a></li>
+                                            <li><a href="#" class="del-btn" data-id="{{ $v->id }}" data-toggle="modal" data-target="#menu-del">删除</a></li>
                                           </ul>
                                         </div>
                                     </td>
@@ -126,7 +127,15 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <label>父级栏目:</label>
-                    <input type="text" name="parent_id" class="form-control" placeholder="选择父级菜单，默认为一级菜单">
+                    <br>
+                    <div class="col-sm-6" style="padding: 0">
+                        <select class="js-example-basic-single" id='menu-update-select' name="parent_id">
+                          <option value="0">一级栏目</option>
+                          @foreach( $parent_data as $v )
+                          <option value="{{ $v->id }}">{{ $v->name }}</option>
+                          @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="col-sm-1"></div>
             </div>
@@ -154,12 +163,17 @@
         <h4 class="modal-title">警告信息！</h4>
       </div>
       <div class="modal-body">
+      <form method="post" action="{{ route('menus.destroy') }}">
+          <input type="hidden" name="id" value="">
+          {{ csrf_field() }}
+          {{ method_field('DELETE') }}
         <p>确定删除这个菜单么，相关功能和模型可能无法使用。</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-danger" onclick="del()">确认删除</button>
+        <button type="submit" class="btn btn-danger" >确认删除</button>
       </div>
+     </form>
     </div>
     <!-- /.modal-content -->
   </div>
@@ -216,7 +230,15 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <label>父级栏目:</label>
-                    <input type="text" name="parent_id" class="form-control" placeholder="选择父级菜单，默认为一级菜单">
+                    <br>
+                    <div class="col-sm-6" style="padding: 0">
+                        <select class="js-example-basic-single" name="parent_id">
+                          <option value="0">一级栏目</option>
+                          @foreach( $parent_data as $v )
+                          <option value="{{ $v->id }}">{{ $v->name }}</option>
+                          @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="col-sm-1"></div>
             </div>
@@ -235,18 +257,10 @@
 <!-- /.modal -->
 
 <script>
-// 删除菜单项目
-let menu_del = function(id){
-    // 删除也可以做个表单 直接请求到 MenusController 的 destroy 方法来进行删除
-    // $.ajax({
-    //     url: "",
-    //     data: {},
-    //     success: function(data){
-    //
-    //     }
-    // });
-    console.log('删除当前菜单项目');
-}
+
+$('.del-btn').click(function(){
+    $('#menu-del').find("input[name='id']").val($(this).data('id'));
+});
 
 // 查看菜单项目
 let menu_info = function(id){
@@ -257,16 +271,22 @@ let menu_info = function(id){
         type: "POST",
         success: function(data){
             data = JSON.parse(data);
-            console.log(data);
+            option_value = "option[value='"+data.parent_id+"']";
             $('#menu-info').find("input[name='id']").val(data.id);
             $('#menu-info').find("input[name='name']").val(data.name);
             $('#menu-info').find("input[name='icon']").val(data.icon);
             $('#menu-info').find("input[name='url']").val(data.url);
             $('#menu-info').find("input[name='name_index']").val(data.name_index);
-            $('#menu-info').find("input[name='parent_id']").val(data.parent_id);
+            // 默认选中option和select2的默认值
+            $('#menu-info').find(option_value).attr('selected',true);
+            $('#menu-update-select').select2("val",[data.parent_id]);
         }
     });
 }
+
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
 </script>
 
 
