@@ -22,17 +22,12 @@ Route::post('register', 'registerController@store')->name('register');
 
 # 根路径
 Route::get('/',['middleware'=>'CheckSignIn',function (Request $request) {
-    $menus = $request->menus;
-    $active = "home";
-    return view('index/index',compact('menus','active'));
-}]);
-
-# 项目首页
-Route::get('home',['middleware'=>'CheckSignIn',function (Request $request){
-    $menus = $request->menus;
-    $active = "home";
-    return view('index/index',compact('menus','active'));
-}])->name('home');
+    $key_data = collect([
+        'menus' => $request->menus,
+        'active' => "home"
+    ]);
+    return view('index/index',compact('key_data'));
+}])->name('/');
 
 # 菜单管理路由
 Route::group(['middleware'=>'CheckSignIn'],function(){

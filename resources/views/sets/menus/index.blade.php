@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title',$title)
+@section('title','菜单管理')
 @section('pageHeader','系统设置')
 @section('pageSmallHeader','菜单管理')
 @section('content')
@@ -41,7 +41,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($datas as $v)
+                                @foreach($key_data->get('datas') as $v)
                                 <tr role="row" >
                                     <td>{{ $v->id }}</td>
                                     <td>{{ $v->name }}</td>
@@ -64,7 +64,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {!! $datas->render() !!}
+                        {!! $key_data->get('datas')->render() !!}
                     </div>
                 </div>
 
@@ -131,7 +131,7 @@
                     <div class="col-sm-6" style="padding: 0">
                         <select class="js-example-basic-single" id='menu-update-select' name="parent_id">
                           <option value="0">一级栏目</option>
-                          @foreach( $parent_data as $v )
+                          @foreach( $key_data->get('parent_data') as $v )
                           <option value="{{ $v->id }}">{{ $v->name }}</option>
                           @endforeach
                         </select>
@@ -234,7 +234,7 @@
                     <div class="col-sm-6" style="padding: 0">
                         <select class="js-example-basic-single" name="parent_id">
                           <option value="0">一级栏目</option>
-                          @foreach( $parent_data as $v )
+                          @foreach( $key_data->get('parent_data') as $v )
                           <option value="{{ $v->id }}">{{ $v->name }}</option>
                           @endforeach
                         </select>

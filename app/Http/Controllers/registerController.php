@@ -12,10 +12,10 @@ use App\User;
 class registerController extends Controller
 {
     /**
-     * 
+     *
      */
     function __construct(){
-        
+
     }
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class registerController extends Controller
     public function create()
     {
         if(Auth::check()){
-            $url = route('home');
+            $url = route('/');
             header("Location: $url");
             exit;
         }

@@ -211,7 +211,7 @@ $.ajaxSetup({
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="@if($active == 'home') active @endif">
+        <li class="@if($key_data->get('active') == 'home') active @endif">
             <a href="/home">
                 <i class="fa fa-home"></i>
                 <span>主页</span>
@@ -219,7 +219,7 @@ $.ajaxSetup({
         </li>
         <!-- 自定义项目 -->
         <li class="header">功能菜单</li>
-        @foreach( $menus as $v )
+        @foreach( $key_data->get('menus') as $v )
             @if(!$v->child_menus->isEmpty())
             <li class="treeview">
               <a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span>
@@ -229,7 +229,7 @@ $.ajaxSetup({
               </a>
               <ul class="treeview-menu">
                 @foreach($v->child_menus as $value)
-                <li class="@if($active == $value->name_index) active @endif">
+                <li class="@if($key_data->get('active') == $value->name_index) active @endif">
                     <a href="{{ $value->url }}">
                         <i class="fa fa-circle-o"></i>
                         {{ $value->name }}
@@ -239,27 +239,27 @@ $.ajaxSetup({
               </ul>
             </li>
             @else
-            <li class="@if($active == $v->name_index) active @endif"><a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
+            <li class="@if($key_data->get('active') == $v->name_index) active @endif"><a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
             @endif
 
         @endforeach
         <li class="header">系统设置</li>
 
-        <li class="@if($active == 'menus') active @endif">
+        <li class="@if($key_data->get('active') == 'menus') active @endif">
             <a href="/menus">
                 <i class="fa fa-hdd-o"></i>
                 <span>菜单管理</span>
             </a>
         </li>
 
-        <li class="@if($active == 'users') active @endif">
+        <li class="@if($key_data->get('active') == 'users') active @endif">
             <a href="/users">
                 <i class="fa fa-users"></i>
                 <span>用户管理</span>
             </a>
         </li>
 
-        <li class="@if($active == 'roles') active @endif">
+        <li class="@if($key_data->get('active') == 'roles') active @endif">
             <a href="/roles">
                 <i class="fa fa-gears"></i>
                 <span>角色管理</span>
@@ -297,7 +297,7 @@ $.ajaxSetup({
   <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-        WINGCA ADMIN DEFAULT 1.0 beta
+        WINGCA ADMIN DEFAULT 1.0 beta {{ $key_data->get('active') }}
     </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.

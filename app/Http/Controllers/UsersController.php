@@ -16,9 +16,13 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-
         //
-        dd("用户列表");
+        $key_data = collect([
+            'menus' => $request->menus,
+            'active' => "home"
+        ]);
+
+        return view('users/index');
     }
 
     /**
