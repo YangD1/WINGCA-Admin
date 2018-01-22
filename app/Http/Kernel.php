@@ -19,7 +19,7 @@ class Kernel extends HttpKernel
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \App\Http\Middleware\VerifyCsrfToken::class,
         // 获取当前登陆用户相应的栏目内容
-        \App\Http\Middleware\prototype::class
+        \App\Http\Middleware\GetMenu::class
     ];
 
     /**
@@ -31,7 +31,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        // 获取当前登陆用户相应的栏目内容
-        'prototype' => \App\Http\Middleware\prototype::class,
+        // 判断当前用户登录状态，并可能判断当前登录会话的访问权限
+        'CheckSignIn' => \App\Http\Middleware\CheckSignIn::class,
     ];
 }

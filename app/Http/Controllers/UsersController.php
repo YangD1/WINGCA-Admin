@@ -9,17 +9,16 @@ use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
-    function __construct(){
-        $this->middieware('auth',['except'=>['show']]);
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         //
+        dd("用户列表");
     }
 
     /**

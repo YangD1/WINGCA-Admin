@@ -244,12 +244,28 @@ $.ajaxSetup({
 
         @endforeach
         <li class="header">系统设置</li>
+
         <li class="@if($active == 'menus') active @endif">
             <a href="/menus">
                 <i class="fa fa-hdd-o"></i>
                 <span>菜单管理</span>
             </a>
         </li>
+
+        <li class="@if($active == 'users') active @endif">
+            <a href="/users">
+                <i class="fa fa-users"></i>
+                <span>用户管理</span>
+            </a>
+        </li>
+
+        <li class="@if($active == 'roles') active @endif">
+            <a href="/roles">
+                <i class="fa fa-gears"></i>
+                <span>角色管理</span>
+            </a>
+        </li>
+
       </ul>
       <!-- /.sidebar-menu -->
     </section>

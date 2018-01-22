@@ -6,7 +6,7 @@ use Closure;
 use Auth;
 use App\Models\Menu;
 
-class prototype
+class GetMenu
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class prototype
     public function handle($request, Closure $next)
     {
         if(Auth::check()){
-            // 在此判断当前用户栏目访问权限
+            // 在此判断当前用户各个栏目访问权限
 
             // 查找所有一级栏目
             $parent_menus = Menu::whereRaw("parent_id = 0")->get();

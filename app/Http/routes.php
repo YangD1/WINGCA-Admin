@@ -20,29 +20,30 @@ Route::get('logout', 'loginController@destroy')->name('logout');
 Route::get('register', 'registerController@create')->name('register');
 Route::post('register', 'registerController@store')->name('register');
 
-// 根路径
-Route::get('/',['middleware' => 'prototype', function (Request $request) {
-    if(Auth::check()){
-        $menus = $request->menus;
-        $active = "home";
-        return view('index/index',compact('menus','active'));
-    }else{
-        return redirect()->route('login');
-    }
+# 根路径
+Route::get('/',['middleware'=>'CheckSignIn',function (Request $request) {
+    $menus = $request->menus;
+    $active = "home";
+    return view('index/index',compact('menus','active'));
 }]);
 
-// 项目首页
-Route::get('home',['middleware' => 'prototype',function (Request $request){
-    if(Auth::check()){
-        $menus = $request->menus;
-        $active = "home";
-        return view('index/index',compact('menus','active'));
-    }else{
-        return redirect()->route('login');
-    }
+# 项目首页
+Route::get('home',['middleware'=>'CheckSignIn',function (Request $request){
+    $menus = $request->menus;
+    $active = "home";
+    return view('index/index',compact('menus','active'));
 }])->name('home');
 
-// 菜单管理路由
-Route::resource('menus','MenusController');
-// 菜单信息
-Route::post('menu_info','MenusController@menu_info')->name('menu_info');
+# 菜单管理路由
+Route::group(['middleware'=>'CheckSignIn'],function(){
+    Route::resource('menus','MenusController');
+    // 菜单信息 ajax 请求接口
+    Route::post('menu_info','MenusController@menu_info')->name('menu_info');
+});
+
+
+// User 模型
+// Route::resource('users','UsersController');
+Route::group(['middleware'=>'CheckSignIn','prefix'=>'users'],function(){
+    Route::get('/','UsersController@index');
+});

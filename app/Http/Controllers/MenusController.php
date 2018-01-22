@@ -18,17 +18,12 @@ class MenusController extends Controller
     public function index(Request $request)
     {
         //
-        if(Auth::check()){
-            $title = "菜单管理";
-            $menus = $request->menus;
-            $active = 'menus';
-            $datas = Menu::paginate(14);
-
-            $parent_data = Menu::whereRaw('parent_id = 0')->get();
-            return view("sets/menus/index",compact('title','menus','active','datas','parent_data'));
-        }else{
-            return redirect()->route('login');
-        }
+        $title = "菜单管理";
+        $menus = $request->menus;
+        $active = 'menus';
+        $datas = Menu::paginate(14);
+        $parent_data = Menu::whereRaw('parent_id = 0')->get();
+        return view("sets/menus/index",compact('title','menus','active','datas','parent_data'));
     }
 
     /**

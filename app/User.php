@@ -36,4 +36,10 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    # 关联权限
+    public function roles()
+    {
+        dd("声明所属关系");
+    }
 }
