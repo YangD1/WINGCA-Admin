@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class CheckSignIn
+class CheckAdminSignIn
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class CheckSignIn
         if(Auth::check()){
             return $next($request);
         }else{
-            return redirect()->route('login');
+            return redirect()->route('admin.login');
         }
     }
 }

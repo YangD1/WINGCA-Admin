@@ -166,7 +166,7 @@ $.ajaxSetup({
                   <a href="#" class="btn btn-default btn-flat">个人信息</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{{ route('logout') }}" class="btn btn-danger btn-flat">退出登录</a>
+                  <a href="{{ route('admin.logout') }}" class="btn btn-danger btn-flat">退出登录</a>
                 </div>
               </li>
             </ul>
@@ -246,21 +246,21 @@ $.ajaxSetup({
         <li class="header">系统设置</li>
 
         <li class="@if($key_data->get('active') == 'menus') active @endif">
-            <a href="/menus">
+            <a href="/admin/menus">
                 <i class="fa fa-hdd-o"></i>
                 <span>菜单管理</span>
             </a>
         </li>
 
         <li class="@if($key_data->get('active') == 'users') active @endif">
-            <a href="/users">
+            <a href="/admin/users">
                 <i class="fa fa-users"></i>
                 <span>用户管理</span>
             </a>
         </li>
 
         <li class="@if($key_data->get('active') == 'roles') active @endif">
-            <a href="/roles">
+            <a href="/admin/roles">
                 <i class="fa fa-gears"></i>
                 <span>角色管理</span>
             </a>
@@ -379,6 +379,21 @@ $.ajaxSetup({
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
+
+<!-- loading -->
+<div class="pop-background">
+  <div class="sk-cube-grid">
+    <div class="sk-cube sk-cube1"></div>
+    <div class="sk-cube sk-cube2"></div>
+    <div class="sk-cube sk-cube3"></div>
+    <div class="sk-cube sk-cube4"></div>
+    <div class="sk-cube sk-cube5"></div>
+    <div class="sk-cube sk-cube6"></div>
+    <div class="sk-cube sk-cube7"></div>
+    <div class="sk-cube sk-cube8"></div>
+    <div class="sk-cube sk-cube9"></div>
+  </div>
+</div>
 
 @include("layouts._footer")
 <script type="text/javascript">

@@ -266,9 +266,12 @@ $('.del-btn').click(function(){
 let menu_info = function(id){
 
     $.ajax({
-        url: "{{ route('menu_info') }}",
+        url: "{{ route('menus.info') }}",
         data: {id: id},
         type: "POST",
+        beforeSend: function(){
+            $('.pop-background').css('display','flex');
+        },
         success: function(data){
             data = JSON.parse(data);
             option_value = "option[value='"+data.parent_id+"']";
@@ -280,6 +283,8 @@ let menu_info = function(id){
             // 默认选中option和select2的默认值
             $('#menu-info').find(option_value).attr('selected',true);
             $('#menu-update-select').select2("val",[data.parent_id]);
+            
+            $('.pop-background').css('display','none');
         }
     });
 }

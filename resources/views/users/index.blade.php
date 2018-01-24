@@ -250,7 +250,7 @@ $('.del-btn').click(function(){
 let menu_info = function(id){
 
     $.ajax({
-        url: "{{ route('menu_info') }}",
+        url: "{{ route('menus.info') }}",
         data: {id: id},
         type: "POST",
         success: function(data){

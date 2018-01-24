@@ -32,6 +32,6 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         // 判断当前用户登录状态，并可能判断当前登录会话的访问权限
-        'CheckSignIn' => \App\Http\Middleware\CheckSignIn::class,
+        'CheckAdminSignIn' => \App\Http\Middleware\CheckAdminSignIn::class,
     ];
 }
