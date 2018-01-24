@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * 注册控制器
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -28,9 +30,7 @@ class registerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * 注册视图
      */
     public function create()
     {
@@ -43,7 +43,7 @@ class registerController extends Controller
     }
 
     /**
-     * 提交注册用户
+     * 提交注册用户(to: users)
      */
     public function store(Request $request)
     {

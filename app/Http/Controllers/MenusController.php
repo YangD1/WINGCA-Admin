@@ -17,15 +17,6 @@ class MenusController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        // $title = "菜单管理";
-        // $menus = $request->menus;
-        // $active = 'menus';
-        // $key_data = [
-        //     $title => "菜单管理",
-        //     $menus => $request->menus,
-        //     $active => 'menus'
-        // ];
 
         $key_data = collect([
             'menus' => $request->menus,

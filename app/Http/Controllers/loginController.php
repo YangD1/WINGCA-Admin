@@ -24,11 +24,8 @@ class loginController extends Controller
     public function create()
     {
         if( Auth::check() ){
-            // $url = route('/');
-            // header("Location: $url");
             return redirect()->route('home');
-            // exit;
-          }
+        }
         return view("auth.login");
     }
 
