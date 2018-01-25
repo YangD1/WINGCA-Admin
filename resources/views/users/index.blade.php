@@ -86,7 +86,7 @@
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>url:</label>
+                    <label>email:</label>
                     <input type="text" name="email" class="form-control" placeholder="填写登录邮箱，不可修改请谨慎填写">
                 </div>
                 <div class="col-sm-1"></div>
@@ -252,6 +252,9 @@ let menu_info = function(id){
         url: "{{ route('users.info') }}",
         data: {id: id},
         type: "POST",
+        beforeSend: function(){
+            $('.pop-background').css('display','flex');
+        },
         success: function(data){
             data = JSON.parse(data);
             option_value = "option[value='"+data.parent_id+"']";
@@ -261,6 +264,8 @@ let menu_info = function(id){
             // 默认选中option和select2的默认值
             $('#menu-info').find(option_value).attr('selected',true);
             $('#menu-update-select').select2("val",[data.parent_id]);
+
+            $('.pop-background').css('display','none');
         }
     });
 }

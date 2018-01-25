@@ -66,6 +66,20 @@ Route::group(['prefix' => 'admin'],function(){
         // 菜单信息(ajax) 
         Route::post('menu_info','MenusController@menu_info')->name('menus.info');
     });
+
+    
+    # 角色权限路由(App/User)
+    Route::group(['middleware'=>'CheckAdminSignIn','prefix'=>'roles'],function(){
+        Route::get('/','RolesController@index')->name('roles.index');
+        Route::post('store','RolesController@store')->name('roles.store');
+        Route::patch('update','RolesController@update')->name('roles.update');
+        Route::delete('destroy','RolesController@destroy')->name('roles.destroy');
+
+        // 用户信息(ajax)
+        Route::post('role_info','RolesController@role_info')->name('roles.info');
+    });
+
+
 });
 
 
