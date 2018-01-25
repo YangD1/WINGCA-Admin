@@ -1,5 +1,8 @@
 .logo-mini img{ width: 30px }
+.modal-body{ overflow: hidden; }
+.form-group{ overflow: hidden }
 .select2-container--default .select2-selection--single{ height: 30px }
+.select2-selection__rendered{ padding-left: 0; }
 /* loading */
 .sk-cube-grid {
   width: 40px;
@@ -73,11 +76,4 @@
     z-index: 9999999;
     background: rgba(255,255,255,.3);
     display: none;
-}
-
-.modal-body{
-    overflow: auto;
-    display: flex;
-    justify-content: center;
-    flex-flow: column;
 }

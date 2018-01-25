@@ -83,9 +83,9 @@
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">【菜单名称】</h4>
       </div>
-      <form method="POST" action="{{ route('menus.update') }}">
-      {{ method_field('PATCH') }}
+      <form method="post" action="{{ route('menus.update') }}">
       {{ csrf_field() }}
+      {{ method_field('PATCH') }}
       <div class="modal-body">
             <div class="form-group">
                 <input type="hidden" name="id" value="">

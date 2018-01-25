@@ -212,7 +212,7 @@ $.ajaxSetup({
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="@if($key_data->get('active') == 'home') active @endif">
-            <a href="/home">
+            <a href="/admin">
                 <i class="fa fa-home"></i>
                 <span>主页</span>
             </a>
@@ -399,6 +399,12 @@ $.ajaxSetup({
 <script type="text/javascript">
 @if (session('success'))
   toastr.success("{{ session('success') }}");
+@endif
+
+@if (count($errors) > 0)
+  @foreach($errors->all() as $error)
+    toastr.warning("{{ $error }}", '错误通知！');
+  @endforeach
 @endif
 
 // 当元素被选中 自动展开父级栏目

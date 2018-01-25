@@ -20,7 +20,7 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="menus" class="table table-bordered table-hover " >
+                        <table id="users" class="table table-bordered table-hover " >
                             <thead>
                                 <tr role="row">
                                     <tr>
@@ -71,15 +71,15 @@
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">添加用户</h4>
       </div>
-      <form method="post" action="{{ route('menus.store') }}">
+      <form method="post" action="{{ route('users.store') }}">
       {{ csrf_field() }}
       <div class="modal-body">
 
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>名称:</label>
-                    <input type="text" name="name" class="form-control" placeholder="菜单名称">
+                    <label>姓名:</label>
+                    <input type="text" name="name" class="form-control" placeholder="姓名">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
@@ -87,34 +87,34 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <label>url:</label>
-                    <input type="text" name="url" class="form-control" placeholder="填写有效的路径">
+                    <input type="text" name="email" class="form-control" placeholder="填写登录邮箱，不可修改请谨慎填写">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>icon: <small><a href="" target="_blank">查看相关的图标列表</a></small></label>
-                    <input type="text" name="icon" class="form-control" placeholder="填写图标名称">
+                    <label>密码：</label>
+                    <input type="password" name="password" class="form-control" placeholder="填写最少六位数的密码">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>菜单索引：</label>
-                    <input type="text" name="name_index" class="form-control" placeholder="填写英文的菜单索引">
+                    <label>确认密码：</label>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="填写最少六位数的密码">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>父级栏目:</label>
+                    <label>用户权限:</label>
                     <br>
                     <div class="col-sm-6" style="padding: 0">
                         <select class="js-example-basic-single" name="parent_id">
-                          <option value="0">一级栏目</option>
+                          <option value="0">默认用户组</option>
                         </select>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">【菜单名称】</h4>
       </div>
-      <form method="POST" action="{{ route('menus.update') }}">
+      <form method="POST" action="{{ route('users.update') }}">
       {{ method_field('PATCH') }}
       {{ csrf_field() }}
       <div class="modal-body">
@@ -162,35 +162,35 @@
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>url:</label>
-                    <input type="text" name="url" class="form-control" placeholder="填写有效的路径">
+                    <label>email:</label>
+                    <input type="text" name="email" class="form-control" disabled="true" placeholder="登录邮箱">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>icon: <small><a href="" target="_blank">查看相关的图标列表</a></small></label>
-                    <input type="text" name="icon" class="form-control" placeholder="填写图标名称">
+                    <label>密码: </label>
+                    <input type="password" name="password" class="form-control" placeholder="密码">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>菜单索引：</label>
-                    <input type="text" name="name_index" class="form-control" placeholder="填写英文的菜单索引">
+                    <label>确认密码：</label>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="确认密码">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>父级栏目:</label>
+                    <label>权限分配:</label>
                     <br>
                     <div class="col-sm-6" style="padding: 0">
                         <select class="js-example-basic-single" id='menu-update-select' name="parent_id">
-                          <option value="0">一级栏目</option>
+                          <option value="0">默认用户组</option>
                         </select>
                     </div>
                 </div>
@@ -220,7 +220,7 @@
         <h4 class="modal-title">警告信息！</h4>
       </div>
       <div class="modal-body">
-      <form method="post" action="{{ route('menus.destroy') }}">
+      <form method="post" action="{{ route('users.destroy') }}">
           <input type="hidden" name="id" value="">
           {{ csrf_field() }}
           {{ method_field('DELETE') }}
@@ -248,9 +248,8 @@ $('.del-btn').click(function(){
 
 // 查看菜单项目
 let menu_info = function(id){
-
     $.ajax({
-        url: "{{ route('menus.info') }}",
+        url: "{{ route('users.info') }}",
         data: {id: id},
         type: "POST",
         success: function(data){
@@ -258,9 +257,7 @@ let menu_info = function(id){
             option_value = "option[value='"+data.parent_id+"']";
             $('#menu-info').find("input[name='id']").val(data.id);
             $('#menu-info').find("input[name='name']").val(data.name);
-            $('#menu-info').find("input[name='icon']").val(data.icon);
-            $('#menu-info').find("input[name='url']").val(data.url);
-            $('#menu-info').find("input[name='name_index']").val(data.name_index);
+            $('#menu-info').find("input[name='email']").val(data.email);
             // 默认选中option和select2的默认值
             $('#menu-info').find(option_value).attr('selected',true);
             $('#menu-update-select').select2("val",[data.parent_id]);

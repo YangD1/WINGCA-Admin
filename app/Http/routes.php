@@ -47,16 +47,23 @@ Route::group(['prefix' => 'admin'],function(){
 
     # 用户管理路由(App/User)
     Route::group(['middleware'=>'CheckAdminSignIn','prefix'=>'users'],function(){
-        Route::get('/','UsersController@index');
+        Route::get('/','UsersController@index')->name('users.index');
+        Route::post('store','UsersController@store')->name('users.store');
+        Route::patch('update','UsersController@update')->name('users.update');
+        Route::delete('destroy','UsersController@destroy')->name('users.destroy');
+
+        // 用户信息(ajax)
+        Route::post('user_info','UsersController@user_info')->name('users.info');
     });
 
     # 菜单管理路由(App/Models/Menu)
     Route::group(['middleware'=>'CheckAdminSignIn','prefix'=>'menus'],function(){
         Route::get('/','MenusController@index')->name('menus.index');
         Route::post('store','MenusController@store')->name('menus.store');
-        Route::post('update','MenusController@update')->name('menus.update');
-        Route::post('destroy','MenusController@destroy')->name('menus.destroy');
-        // 菜单信息 ajax 请求接口
+        Route::patch('update','MenusController@update')->name('menus.update');
+        Route::delete('destroy','MenusController@destroy')->name('menus.destroy');
+    
+        // 菜单信息(ajax) 
         Route::post('menu_info','MenusController@menu_info')->name('menus.info');
     });
 });
