@@ -3,6 +3,12 @@
 @section('pageHeader','系统设置')
 @section('pageSmallHeader','角色管理')
 @section('content')
+<link rel="stylesheet" href="/statics/plugin/AdminLTE/plugins/iCheck/all.css">
+<style>
+ .icheckbox_flat-blue{
+    margin-top: -4px;
+ }
+</style>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -86,10 +92,23 @@
                 <div class="col-sm-10">
                     <label>可操作栏目:</label>
                     <br>
-                    <div class="col-sm-6" style="padding: 0">
-                        <select class="js-example-basic-single" name="parent_id">
-                          <option value="0"></option>
-                        </select>
+                    <div class="col-sm-12 menu-group" >
+                        @foreach( $key_data->get('menus') as $v )
+                            <div class="menu-group-checkbox">
+                                <div class="menu-group-item">
+                                    <input type="checkbox" class="flat-menu" value="{{ $v->id }}" name="access_menus_id[]">
+                                    <label>{{ $v->name }}</label>
+                                </div>
+                                @if(!$v->child_menus->isEmpty())
+                                    @for ($i = 0; $i < $v->child_menus->count(); $i++)
+                                    <div class="menu-group-item menu-child-item">
+                                        <input type="checkbox" value="{{ $v->child_menus[$i]->id }}" class="flat-menu" name="access_menus_id[]">
+                                        <label>{{ $v->child_menus[$i]->name }}</label>
+                                    </div>
+                                    @endfor
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-sm-1"></div>
@@ -138,10 +157,23 @@
                 <div class="col-sm-10">
                     <label>可操作栏目:</label>
                     <br>
-                    <div class="col-sm-6" style="padding: 0">
-                        <select class="js-example-basic-single" id='menu-update-select' name="parent_id">
-                          <option value="0"></option>
-                        </select>
+                    <div class="col-sm-12 menu-group" >
+                        @foreach( $key_data->get('menus') as $v )
+                            <div class="menu-group-checkbox">
+                                <div class="menu-group-item">
+                                    <input type="checkbox" class="flat-menu" value="{{ $v->id }}" name="access_menus_id[]" >
+                                    <label>{{ $v->name }}</label>
+                                </div>
+                                @if(!$v->child_menus->isEmpty())
+                                    @for ($i = 0; $i < $v->child_menus->count(); $i++)
+                                    <div class="menu-group-item menu-child-item">
+                                        <input type="checkbox" value="{{ $v->child_menus[$i]->id }}" class="flat-menu" name="access_menus_id[]">
+                                        <label>{{ $v->child_menus[$i]->name }}</label>
+                                    </div>
+                                    @endfor
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-sm-1"></div>
@@ -188,7 +220,7 @@
 </div>
 <!-- /.modal -->
 
-
+<script src="/statics/plugin/AdminLTE/plugins/iCheck/icheck.min.js"></script>
 
 <script>
 
@@ -207,13 +239,20 @@ let menu_info = function(id){
         },
         success: function(data){
             data = JSON.parse(data);
+            console.log(data);
             option_value = "option[value='"+data.parent_id+"']";
             $('#menu-info').find("input[name='id']").val(data.id);
             $('#menu-info').find("input[name='name']").val(data.name);
-            $('#menu-info').find("input[name='email']").val(data.email);
-            // 默认选中option和select2的默认值
-            $('#menu-info').find(option_value).attr('selected',true);
-            $('#menu-update-select').select2("val",[data.parent_id]);
+            // 默认选中checkbox的默认值
+            $('#menu-info .menu-group .menu-group-item').find('input').iCheck('uncheck');
+            $('#menu-info .menu-group .menu-group-item').each(function(){
+                var that = $(this).find('input');
+                for(var i = 0 ; i < data.access_menus_id.length ; i++){
+                    if(that.val() == data.access_menus_id[i]){
+                        that.iCheck('check');
+                    }
+                }
+            });
             
             $('.pop-background').css('display','none');
         }
@@ -222,6 +261,11 @@ let menu_info = function(id){
 
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
+});
+
+$('input[type="checkbox"].flat-menu, input[type="radio"].flat-menu').iCheck({
+    checkboxClass: 'icheckbox_flat-blue', 
+    radioClass: 'iradio_flat-blue' 
 });
 </script>
 

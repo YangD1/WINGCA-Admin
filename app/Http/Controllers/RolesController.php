@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\Menu;
 
 class RolesController extends Controller
 {
@@ -19,7 +20,8 @@ class RolesController extends Controller
         $key_data = collect([
             'menus' => $request->menus,
             'active' => "roles",
-            'datas' => Role::paginate(14)
+            'datas' => Role::paginate(14),
+            'menus_data' => Menu::all()
         ]);
 
         return view('roles/index',compact('key_data'));
@@ -33,15 +35,18 @@ class RolesController extends Controller
         //
        $this->validate($request, [
             'name' => 'required|max:50',
+            'access_menus_id' => 'required'
         ],[
             'name.required' => '请填写角色名称',
+            'access_menus_id.required' => '必须选择可以管理的栏目'
         ]);
 
         Role::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'access_menus_id' => implode(',',$request->access_menus_id)
         ]);
 
-        session()->flash('success', '创建成功！');
+        session()->flash('success', '角色创建成功！');
         return redirect()->route('roles.index');
     }
 
@@ -53,11 +58,16 @@ class RolesController extends Controller
         //
         $role = Role::find($request->id);
         $this->validate($request, [
-            'name' => 'required|max:50'
+            'name' => 'required|max:50',
+            'access_menus_id' => 'required'
+        ],[
+            'name.required' => '请填写角色名称',
+            'access_menus_id.required' => '必须选择可以管理的栏目'
         ]);
 
         $data = [];
         $data['name'] = $request->name;
+        $data['access_menus_id'] = implode(',',$request->access_menus_id);
         $role->update($data);
 
         session()->flash('success', '用户信息更新成功！');
@@ -81,6 +91,7 @@ class RolesController extends Controller
     public function role_info(Request $request)
     {
         $data = Role::find($request->id);
+        $data->access_menus_id = explode(",",$data->access_menus_id);
         echo json_encode($data);    
     }
 }

@@ -77,3 +77,25 @@
     background: rgba(255,255,255,.3);
     display: none;
 }
+
+.menu-group-checkbox{
+    border-bottom: 1px solid #d2d6de;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.menu-group-checkbox:last-child {
+    border: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.menu-group{
+  border: 1px solid #d2d6de;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.menu-child-item{
+  padding-left: 20px;
+}

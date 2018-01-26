@@ -198,7 +198,7 @@ $.ajaxSetup({
       </div> -->
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
+      <!-- <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
           <span class="input-group-btn">
@@ -206,7 +206,7 @@ $.ajaxSetup({
               </button>
             </span>
         </div>
-      </form>
+      </form> -->
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
@@ -241,7 +241,6 @@ $.ajaxSetup({
             @else
             <li class="@if($key_data->get('active') == $v->name_index) active @endif"><a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
             @endif
-
         @endforeach
         <li class="header">系统设置</li>
 
