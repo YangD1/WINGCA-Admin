@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
+use App\Models\Role;
 
 class UsersController extends Controller
 {
@@ -17,11 +18,17 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        
+        $datas = User::paginate(14);
+        foreach($datas as $k=>$v){
+            if($v->role){
+                $datas[$k]['role'] = Role::find($v->role->role_id)->name;
+            }
+        }
         $key_data = collect([
             'menus' => $request->menus,
             'active' => "users",
-            'datas' => User::paginate(14)
+            'datas' => $datas,
+            'role_datas' => Role::all()
         ]);
 
         return view('users/index',compact('key_data'));

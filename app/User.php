@@ -23,6 +23,13 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $table = 'users';
 
+
+    // 关联权限模型
+    public function role()
+    {
+        return $this->hasOne('App\Models\UserRole');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

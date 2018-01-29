@@ -27,6 +27,7 @@
                                         <th rowspan="1" colspan="1">#</th>
                                         <th rowspan="1" colspan="1">用户名</th>
                                         <th rowspan="1" colspan="1">e-mail</th>
+                                        <th rowspan="1" colspan="1">当前权限</th>
                                         <th rowspan="1" colspan="1">操作</th>
                                     </tr>
                                 </tr>
@@ -37,6 +38,7 @@
                                     <td>{{ $v->id }}</td>
                                     <td>{{ $v->name }}</td>
                                     <td>{{ $v->email }}</td>
+                                    <td>{!! $v->role or "没有选择角色" !!}</td>
                                     <td>
                                         <div class="btn-group">
                                           <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" data-toggle="modal" data-target="#menu-info">查看</button>
@@ -114,7 +116,10 @@
                     <br>
                     <div class="col-sm-6" style="padding: 0">
                         <select class="js-example-basic-single" name="parent_id">
-                          <option value="0">默认用户组</option>
+                            <option value="0">默认用户组</option>
+                            @foreach($key_data->get('role_datas') as $v)
+                            <option value="{{ $v->id }}">{{ $v->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -190,7 +195,10 @@
                     <br>
                     <div class="col-sm-6" style="padding: 0">
                         <select class="js-example-basic-single" id='menu-update-select' name="parent_id">
-                          <option value="0">默认用户组</option>
+                            <option value="0">默认用户组</option>
+                            @foreach($key_data->get('role_datas') as $v)
+                            <option value="{{ $v->id }}">{{ $v->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

@@ -4,6 +4,7 @@
     @include('layouts._header')
 </head>
 <body class="hold-transition skin-black sidebar-mini">
+<!-- 获取关联过后的当前用户权限 Auth::user()->role->role_id) -->
 <script type="text/javascript">
 $.ajaxSetup({
     headers: {
