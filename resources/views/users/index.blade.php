@@ -115,8 +115,8 @@
                     <label>用户权限:</label>
                     <br>
                     <div class="col-sm-6" style="padding: 0">
-                        <select class="js-example-basic-single" name="parent_id">
-                            <option value="0">默认用户组</option>
+                        <select class="js-example-basic-single" name="role_id">
+                            <option value="0">没有选择角色</option>
                             @foreach($key_data->get('role_datas') as $v)
                             <option value="{{ $v->id }}">{{ $v->name }}</option>
                             @endforeach
@@ -175,16 +175,16 @@
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>密码: </label>
-                    <input type="password" name="password" class="form-control" placeholder="密码">
+                    <label>新密码: </label>
+                    <input type="password" name="password" class="form-control" placeholder="新密码">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>确认密码：</label>
-                    <input type="password" name="password_confirmation" class="form-control" placeholder="确认密码">
+                    <label>确认新密码：</label>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="确认新密码">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
@@ -194,8 +194,8 @@
                     <label>权限分配:</label>
                     <br>
                     <div class="col-sm-6" style="padding: 0">
-                        <select class="js-example-basic-single" id='menu-update-select' name="parent_id">
-                            <option value="0">默认用户组</option>
+                        <select class="js-example-basic-single" id='menu-update-select' name="role_id">
+                            <option value="0">没有选择角色</option>
                             @foreach($key_data->get('role_datas') as $v)
                             <option value="{{ $v->id }}">{{ $v->name }}</option>
                             @endforeach
@@ -232,7 +232,7 @@
           <input type="hidden" name="id" value="">
           {{ csrf_field() }}
           {{ method_field('DELETE') }}
-        <p>确定删除这个菜单么，相关功能和模型可能无法使用。</p>
+        <p>确定删除此用户么？</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
@@ -265,13 +265,13 @@ let menu_info = function(id){
         },
         success: function(data){
             data = JSON.parse(data);
-            option_value = "option[value='"+data.parent_id+"']";
+            option_value = "option[value='"+data.role_id+"']";
             $('#menu-info').find("input[name='id']").val(data.id);
             $('#menu-info').find("input[name='name']").val(data.name);
             $('#menu-info').find("input[name='email']").val(data.email);
             // 默认选中option和select2的默认值
             $('#menu-info').find(option_value).attr('selected',true);
-            $('#menu-update-select').select2("val",[data.parent_id]);
+            $('#menu-update-select').select2("val",[data.role_id]);
 
             $('.pop-background').css('display','none');
         }

@@ -2,6 +2,7 @@
 .modal-body{ overflow: hidden; }
 .form-group{ overflow: hidden }
 .select2-container--default .select2-selection--single{ height: 30px }
+.select2-container .select2-selection--single .select2-selection__rendered{ padding-left: 0; }
 .select2-selection__rendered{ padding-left: 0; }
 /* loading */
 .sk-cube-grid {
@@ -98,4 +99,8 @@
 
 .menu-child-item{
   padding-left: 20px;
+}
+
+.box-body td{
+  line-height: 30px !important;
 }

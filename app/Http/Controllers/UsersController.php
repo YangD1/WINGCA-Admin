@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
 use App\Models\Role;
+use App\Models\UserRole;
 
 class UsersController extends Controller
 {
@@ -20,8 +21,9 @@ class UsersController extends Controller
     {
         $datas = User::paginate(14);
         foreach($datas as $k=>$v){
+            // 判断分配的相关权限
             if($v->role){
-                $datas[$k]['role'] = Role::find($v->role->role_id)->name;
+                $datas[$k]['role'] = Role::find($v->role->role_id) ? Role::find($v->role->role_id)->name : "关联权限不存在";
             }
         }
         $key_data = collect([
@@ -35,7 +37,7 @@ class UsersController extends Controller
     }
 
     /**
-     * 添加用户提交
+     * 提交创建新用户 
      */
     public function store(Request $request)
     {
@@ -55,12 +57,10 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
-
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // 认证通过...
-            session()->flash('success', '创建成功！');
-            return redirect()->intended('admin');
-        }
+        // 角色创建成功，新建关联的角色信息(to table: user_roles)
+        UserRole::create(['user_id'=>$user->id, 'role_id'=>$request->role_id]);
+        session()->flash('success', '用户创建成功！');
+        return redirect()->route('users.index');
 
     }
 
@@ -83,6 +83,12 @@ class UsersController extends Controller
             $data['password'] = bcrypt($request->password);
         }
 
+        if($user->role){
+            $user->role->update(['role_id'=>$request->role_id]); 
+        }else{
+            UserRole::create(['user_id'=>$user->id, 'role_id'=>$request->role_id]);
+        }
+
         $user->update($data);
 
         session()->flash('success', '用户信息更新成功！');
@@ -95,6 +101,8 @@ class UsersController extends Controller
     public function user_info(Request $request)
     {
         $data = User::find($request->id);
+        // 调用权限id
+        $data['role_id'] = User::find($request->id)->role ? User::find($request->id)->role->role_id : 0;
         echo json_encode($data);    
     }
 
@@ -104,6 +112,9 @@ class UsersController extends Controller
      */
     public function destroy(Request $request)
     {
+        // 先删除相关的权限信息
+        User::find($request->id)->role()->delete();
+        // 删除用户
         User::find($request->id)->delete();        
         session()->flash('success','删除成功');
         return redirect()->route('users.index');
