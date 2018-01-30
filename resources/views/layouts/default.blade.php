@@ -143,7 +143,7 @@ $.ajaxSetup({
                 <img src="/statics/plugin/adminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  {{ Auth::user()->name }} - Web Developer
+                  {{ Auth::user()->name }} - {!! Auth::user()->role_name() !!}
                   <!-- <small>Member since Nov. 2012</small> -->
                 </p>
               </li>
@@ -243,6 +243,7 @@ $.ajaxSetup({
             <li class="@if($key_data->get('active') == $v->name_index) active @endif"><a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span></a></li>
             @endif
         @endforeach
+       @can('adminSee', \App\Models\Menu::class)
         <li class="header">系统设置</li>
 
         <li class="@if($key_data->get('active') == 'menus') active @endif">
@@ -265,7 +266,7 @@ $.ajaxSetup({
                 <span>角色管理</span>
             </a>
         </li>
-
+        @endif
       </ul>
       <!-- /.sidebar-menu -->
     </section>

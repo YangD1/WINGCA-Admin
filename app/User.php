@@ -1,7 +1,8 @@
 <?php
 
 namespace App;
-
+use Auth;
+use \App\Models\Role;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -48,5 +49,18 @@ class User extends Model implements AuthenticatableContract,
     public function roles()
     {
         dd("声明所属关系");
+    }
+
+    # 查看当前用户的权限是否是超级管理员(当前id为1的是超级管理员)
+    public function checkAdmin()
+    {
+       return Auth::user()->role->role_id == 1; 
+    }
+
+
+    # 返回当前登录用户的权限名称
+    public function role_name()
+    {
+        return Role::find(Auth::user()->role->role_id)->name;
     }
 }

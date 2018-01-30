@@ -12,6 +12,11 @@ use App\Models\Menu;
 
 class MenusController extends Controller
 {
+    function __construct()
+    {
+        
+    }
+
     /**
      *  菜单列表
      */

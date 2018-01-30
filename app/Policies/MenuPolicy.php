@@ -28,4 +28,9 @@ class MenuPolicy
     public function update(User $user,Menu $menu){
         return true;
     }
+
+    # 只有管理员可以查看
+    public function adminSee(User $user){
+        return $user->checkAdmin();
+    }
 }
