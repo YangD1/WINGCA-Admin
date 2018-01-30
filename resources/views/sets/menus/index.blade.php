@@ -274,7 +274,8 @@ let menu_info = function(id){
         },
         success: function(data){
             data = JSON.parse(data);
-            option_value = "option[value='"+data.parent_id+"']";
+            let option_value = "option[value='"+data.parent_id+"']";
+            // let this_option = "option[value='"+id+"']";
             $('#menu-info').find("input[name='id']").val(data.id);
             $('#menu-info').find("input[name='name']").val(data.name);
             $('#menu-info').find("input[name='icon']").val(data.icon);
@@ -283,6 +284,9 @@ let menu_info = function(id){
             // 默认选中option和select2的默认值
             $('#menu-info').find(option_value).attr('selected',true);
             $('#menu-update-select').select2("val",[data.parent_id]);
+            // 禁止选中栏目自己本身成为子栏目
+            // $('#menu-info').find(this_option).attr('disabled',true);
+            // $('#menu-info').find(this_option).select2({disabled: true});
             
             $('.pop-background').css('display','none');
         }

@@ -58,8 +58,7 @@ class MenusController extends Controller
             'parent_id' => $request->parent_id
         ];
         Menu::create($data);
-        session()->flash('success','添加成功');
-        return redirect()->route('menus.index');
+        
     }
 
     public function show($id)
@@ -74,7 +73,11 @@ class MenusController extends Controller
 
     public function update(Request $request)
     {
-        //
+        // 
+        if($request->parent_id == $request->id){
+            session()->flash('warning','不可以选中栏目本身为父栏目');
+            return redirect()->route('menus.index');
+        };
         $data = [
             'name' => $request->name,
             'url' => $request->url,

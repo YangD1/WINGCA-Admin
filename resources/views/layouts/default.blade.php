@@ -402,6 +402,14 @@ $.ajaxSetup({
   toastr.success("{{ session('success') }}");
 @endif
 
+@if (session('warning'))
+  toastr.warning("{{ session('warning') }}");
+@endif
+
+@if (session('danger'))
+  toastr.danger("{{ session('danger') }}");
+@endif
+
 @if (count($errors) > 0)
   @foreach($errors->all() as $error)
     toastr.warning("{{ $error }}", '错误通知！');
