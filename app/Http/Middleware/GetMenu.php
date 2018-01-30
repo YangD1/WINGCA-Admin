@@ -20,7 +20,7 @@ class GetMenu
     {
         if(Auth::check()){
             // 获取当前可以操作的栏目id
-            $access_menus_id = Role::find(Auth::user()->role->role_id)->access_menus_id;
+            $access_menus_id = Role::find(Auth::user()->role->role_id) ? Role::find(Auth::user()->role->role_id)->access_menus_id : "";
             // 查找所有一级栏目
             // $parent_menus = Menu::whereRaw("parent_id = 0")->get();
             $parent_menus = Menu::whereRaw("FIND_IN_SET(id,?) AND parent_id = 0",[$access_menus_id])->get();
