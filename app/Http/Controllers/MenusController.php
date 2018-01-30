@@ -12,9 +12,12 @@ use App\Models\Menu;
 
 class MenusController extends Controller
 {
+    /**
+     * 限制只有超级管理员才可以访问
+     */
     function __construct()
     {
-        
+       $this->authorize('adminSee', \App\Models\Menu::class); 
     }
 
     /**
