@@ -93,7 +93,7 @@
                     <label>可操作栏目:</label>
                     <br>
                     <div class="col-sm-12 menu-group" >
-                        @foreach( $key_data->get('menus') as $v )
+                        @foreach( $key_data->get('all_menus') as $v )
                             <div class="menu-group-checkbox">
                                 <div class="menu-group-item">
                                     <input type="checkbox" class="flat-menu" value="{{ $v->id }}" name="access_menus_id[]">
@@ -158,7 +158,7 @@
                     <label>可操作栏目:</label>
                     <br>
                     <div class="col-sm-12 menu-group" >
-                        @foreach( $key_data->get('menus') as $v )
+                        @foreach( $key_data->get('all_menus') as $v )
                             <div class="menu-group-checkbox">
                                 <div class="menu-group-item">
                                     <input type="checkbox" class="flat-menu" value="{{ $v->id }}" name="access_menus_id[]" >

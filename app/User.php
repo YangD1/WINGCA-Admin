@@ -61,6 +61,6 @@ class User extends Model implements AuthenticatableContract,
     # 返回当前登录用户的权限名称
     public function role_name()
     {
-        return Role::find(Auth::user()->role->role_id)->name;
+        return Role::find(Auth::user()->role->role_id) ? Role::find(Auth::user()->role->role_id)->name : "关联权限信息不存在";
     }
 }
