@@ -164,7 +164,7 @@ $.ajaxSetup({
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">个人信息</a>
+                  <a href="{{ route('user.edit',Auth::user()->id) }}" class="btn btn-default btn-flat">个人信息</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{ route('admin.logout') }}" class="btn btn-danger btn-flat">退出登录</a>
@@ -278,11 +278,11 @@ $.ajaxSetup({
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        @yield('pageHeader','No Page Header')
-        <small>@yield('pageSmallHeader','No Page Small Header')</small>
+        @yield('pageHeader','')
+        <small>@yield('pageSmallHeader','')</small>
       </h1>
       <ol class="breadcrumb">
-        <li id="breadcrumb"><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li id="breadcrumb"><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
       </ol>
     </section>
 

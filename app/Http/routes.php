@@ -38,25 +38,29 @@ Route::get('/admin',['middleware'=>'CheckAdminSignIn',function (Request $request
 
 # 其他 后台路由
 Route::group(['prefix' => 'admin'],function(){
-    # 后台登录(App/User)
+    # 后台用户会话相关路由(App/User)
     Route::get('login','AdminSessionController@login')->name('admin.login');
     Route::post('login','AdminSessionController@login_store')->name('admin.login');
     Route::get('register','AdminSessionController@register')->name('admin.register');
     Route::post('register','AdminSessionController@register_store')->name('admin.register');
     Route::get('logout','AdminSessionController@logout')->name('admin.logout');
 
-    # 用户管理路由(App/User)
+    # 用户管理路由(Model: App/User)
     Route::group(['middleware'=>'CheckAdminSignIn','prefix'=>'users'],function(){
         Route::get('/','UsersController@index')->name('users.index');
         Route::post('store','UsersController@store')->name('users.store');
         Route::patch('update','UsersController@update')->name('users.update');
         Route::delete('destroy','UsersController@destroy')->name('users.destroy');
-
+        
         // 用户信息(ajax)
         Route::post('user_info','UsersController@user_info')->name('users.info');
+
+        // 用户自我管理
+        Route::get('edit/{id}','userManageController@edit')->name('user.edit');
+        Route::patch('update/{id}','userManageController@update')->name('user.update');
     });
 
-    # 菜单管理路由(App/Models/Menu)
+    # 菜单管理路由(Model: App/Models/Menu)
     Route::group(['middleware'=>'CheckAdminSignIn','prefix'=>'menus'],function(){
         Route::get('/','MenusController@index')->name('menus.index');
         Route::post('store','MenusController@store')->name('menus.store');
@@ -68,14 +72,14 @@ Route::group(['prefix' => 'admin'],function(){
     });
 
     
-    # 角色权限路由(App/User)
+    # 角色权限路由(Model: App/User)
     Route::group(['middleware'=>'CheckAdminSignIn','prefix'=>'roles'],function(){
         Route::get('/','RolesController@index')->name('roles.index');
         Route::post('store','RolesController@store')->name('roles.store');
         Route::patch('update','RolesController@update')->name('roles.update');
         Route::delete('destroy','RolesController@destroy')->name('roles.destroy');
 
-        // 用户信息(ajax)
+        // 权限信息(ajax)
         Route::post('role_info','RolesController@role_info')->name('roles.info');
     });
 

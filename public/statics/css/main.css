@@ -104,3 +104,11 @@
 .box-body td{
   line-height: 30px !important;
 }
+
+.user-card{
+  background: #fff;
+}
+
+.psersonal-form label{
+  text-align: right;
+}
