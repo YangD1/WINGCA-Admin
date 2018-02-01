@@ -30,19 +30,19 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">新密码：</label>
                         <div class="col-sm-6">
-                            <input class="form-control" name="password" type="password">
+                            <input class="form-control" name="password" placeholder="输入新密码" type="password">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">确认新密码：</label>
                         <div class="col-sm-6">
-                            <input class="form-control" name="password_confirmation" type="password">
+                            <input class="form-control" name="password_confirmation" placeholder="确认新密码" type="password">
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 0">
                         <label class="col-sm-3 control-label">我的当前身份：</label>
                         <div class="col-sm-6">
-                            {{ Auth::user()->role_name() }}
+                           &nbsp;&nbsp;&nbsp;&nbsp;{{ Auth::user()->role_name() }}
                         </div>
                     </div>
                     

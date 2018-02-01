@@ -164,13 +164,26 @@
                                     <input type="checkbox" class="flat-menu" value="{{ $v->id }}" name="access_menus_id[]" >
                                     <label>{{ $v->name }}</label>
                                 </div>
-                                @if(!$v->child_menus->isEmpty())
-                                    @for ($i = 0; $i < $v->child_menus->count(); $i++)
-                                    <div class="menu-group-item menu-child-item">
-                                        <input type="checkbox" value="{{ $v->child_menus[$i]->id }}" class="flat-menu" name="access_menus_id[]">
-                                        <label>{{ $v->child_menus[$i]->name }}</label>
-                                    </div>
-                                    @endfor
+                                @if( !$v->child_menus->isEmpty() )
+                                
+                                    @foreach( $v->child_menus as $k => $val )
+                                        <div class="menu-group-item menu-child-item">
+                                            <i class="fa fa-arrow-up"></i>
+                                            <input type="checkbox" value="{{ $val->id }}" class="flat-menu" name="access_menus_id[]">
+                                            <label>{{ $val->name }}</label>
+                                        </div>
+                                        @if( !$val->son_menus->isEmpty() )
+                                            @foreach ( $val->son_menus as $key => $value )
+                                            <div class="menu-group-item menu-son-item">
+                                            <i class="fa fa-ellipsis-v" style="margin-right: 9px"></i>
+                                            <i class="fa fa-arrow-up"></i>
+                                                <input type="checkbox" value="{{ $value->id }}" class="flat-menu" name="access_menus_id[]">
+                                                <label>{{ $value->name }}</label>
+                                            </div>
+                                            @endforeach
+                                        @endif
+                                    @endforeach
+                                    
                                 @endif
                             </div>
                         @endforeach

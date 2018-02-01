@@ -223,19 +223,43 @@ $.ajaxSetup({
         @foreach( $key_data->get('menus') as $v )
             @if(!$v->child_menus->isEmpty())
             <li class="treeview">
-              <a href="{{ $v->url }}"><i class="fa fa-{{ $v->icon }}"></i> <span>{{ $v->name }}</span>
+              <a href="{{ $v->url }}">
+                <i class="fa fa-{{ $v->icon }}"></i> 
+                <span>{{ $v->name }}</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
-                  </span>
+                </span>
               </a>
               <ul class="treeview-menu">
                 @foreach($v->child_menus as $value)
+                @if(!$value->son_menus->isEmpty())
+                <li class="treeview">
+                    <a href="{{ $value->url }}">
+                        <i class="fa fa-circle-o"></i>
+                        {{ $value->name }}
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                      @foreach($value->son_menus as $row)
+                      <li>
+                        <a href="{{ $row->url }}">
+                          <i class="fa fa-circle-o"></i>
+                          {{ $row->name }}
+                        </a>
+                      </li>
+                      @endforeach
+                    </ul>
+                </li>
+                @else
                 <li class="@if($key_data->get('active') == $value->name_index) active @endif">
                     <a href="{{ $value->url }}">
                         <i class="fa fa-circle-o"></i>
                         {{ $value->name }}
                     </a>
                 </li>
+                @endif
                 @endforeach
               </ul>
             </li>
@@ -253,7 +277,7 @@ $.ajaxSetup({
             </a>
         </li>
 
-        <li class="@if($key_data->get('active') == 'users') active @endif">
+        <li class="@if($key_data->get('active') == 'menus') active @endif">
             <a href="/admin/users">
                 <i class="fa fa-users"></i>
                 <span>用户管理</span>
@@ -418,6 +442,8 @@ $.ajaxSetup({
 
 // 当元素被选中 自动展开父级栏目
 $('.sidebar-menu').find('.active').parents('.treeview').addClass('active menu-open');
+console.log($('.sidebar-menu').find('.active').parents('.treeview'));
+$('.sidebar-menu').find('.active').parents('.treeview').parents('.treeview').addClass('active menu-open');
 
 // breadcrumb 导航
 var menus = $('.sidebar-menu').find('li.active > a');

@@ -30,7 +30,7 @@ class MenusController extends Controller
             'menus' => $request->menus,
             'active' => "menus",
             'datas' => Menu::paginate(14),
-            'parent_data' => Menu::whereRaw('parent_id = 0')->get(),
+            'parent_data' => Menu::whereRaw('menu_lv < 3')->get(),
         ]);
 
         return view("sets/menus/index",compact('datas','parent_data','key_data'));
@@ -49,16 +49,19 @@ class MenusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 获取当前新建栏目的父级栏目的栏目等级
+        $menu_lv = Menu::find($request->parent_id) ? (Menu::find($request->parent_id)->menu_lv) + 1 : 1; 
         $data = [
             'name' => $request->name,
             'url' => $request->url,
             'icon' => $request->icon,
             'name_index' => $request->name_index,
-            'parent_id' => $request->parent_id
+            'parent_id' => $request->parent_id,
+            'menu_lv' => $menu_lv
         ];
         Menu::create($data);
-        
+        session()->flash('success','添加成功');
+        return redirect()->route('menus.index');
     }
 
     public function show($id)
@@ -73,17 +76,22 @@ class MenusController extends Controller
 
     public function update(Request $request)
     {
-        // 
+
+        // 判断当前栏目的等级变化
+        $menu_lv = Menu::find($request->parent_id) ? (Menu::find($request->parent_id)->menu_lv) + 1 : 1;
+
         if($request->parent_id == $request->id){
             session()->flash('warning','不可以选中栏目本身为父栏目');
             return redirect()->route('menus.index');
         };
+
         $data = [
             'name' => $request->name,
             'url' => $request->url,
             'icon' => $request->icon,
             'name_index' => $request->name_index,
-            'parent_id' => $request->parent_id
+            'parent_id' => $request->parent_id,
+            'menu_lv' => $menu_lv
         ];
         Menu::find($request->id)->update($data);
         session()->flash('success','更新成功');

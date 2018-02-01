@@ -34,7 +34,7 @@
                                         <th rowspan="1" colspan="1">#</th>
                                         <th rowspan="1" colspan="1">菜单名称</th>
                                         <th rowspan="1" colspan="1">url</th>
-                                        <th rowspan="1" colspan="1">父级栏目</th>
+                                        <th rowspan="1" colspan="1">父级栏目id</th>
                                         <th rowspan="1" colspan="1">icon</th>
                                         <th rowspan="1" colspan="1">操作</th>
                                     </tr>

@@ -23,11 +23,13 @@ class RolesController extends Controller
      */
     public function index(Request $request)
     {
-        //调用所有栏目
-        $allMenus = Menu::whereRaw("parent_id = 0")->get();
-        // $parent_menus = Menu::whereRaw("FIND_IN_SET(id,?) AND parent_id = 0",[$access_menus_id])->get();
+        // 调用所有栏目
+        $allMenus = Menu::whereRaw("menu_lv = 1")->get();
         foreach( $allMenus as $k => $v ){
             $v->child_menus = Menu::whereRaw("parent_id = ?",[$v->id])->get();
+            foreach( $v->child_menus as $key => $value ){
+                $value->son_menus = Menu::whereRaw("parent_id = ?",[$value->id])->get();
+            }
         } 
         $key_data = collect([
             'menus' => $request->menus,
