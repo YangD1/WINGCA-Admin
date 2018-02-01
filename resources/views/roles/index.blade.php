@@ -161,15 +161,15 @@
                         @foreach( $key_data->get('all_menus') as $v )
                             <div class="menu-group-checkbox">
                                 <div class="menu-group-item">
-                                    <input type="checkbox" class="flat-menu" value="{{ $v->id }}" name="access_menus_id[]" >
+                                    <input type="checkbox" class="flat-menu" data-lv="{{ $v->menu_lv }}" value="{{ $v->id }}" name="access_menus_id[]" >
                                     <label>{{ $v->name }}</label>
                                 </div>
                                 @if( !$v->child_menus->isEmpty() )
-                                
                                     @foreach( $v->child_menus as $k => $val )
+                                    <div class="child-menu-box">
                                         <div class="menu-group-item menu-child-item">
                                             <i class="fa fa-arrow-up"></i>
-                                            <input type="checkbox" value="{{ $val->id }}" class="flat-menu" name="access_menus_id[]">
+                                            <input type="checkbox" value="{{ $val->id }}" data-lv="{{ $val->menu_lv }}" class="flat-menu" name="access_menus_id[]">
                                             <label>{{ $val->name }}</label>
                                         </div>
                                         @if( !$val->son_menus->isEmpty() )
@@ -177,13 +177,13 @@
                                             <div class="menu-group-item menu-son-item">
                                             <i class="fa fa-ellipsis-v" style="margin-right: 9px"></i>
                                             <i class="fa fa-arrow-up"></i>
-                                                <input type="checkbox" value="{{ $value->id }}" class="flat-menu" name="access_menus_id[]">
+                                                <input type="checkbox" value="{{ $value->id }}" data-lv="{{ $value->menu_lv }}" class="flat-menu" name="access_menus_id[]">
                                                 <label>{{ $value->name }}</label>
                                             </div>
                                             @endforeach
                                         @endif
+                                    </div>
                                     @endforeach
-                                    
                                 @endif
                             </div>
                         @endforeach
@@ -279,6 +279,33 @@ $(document).ready(function() {
 $('input[type="checkbox"].flat-menu, input[type="radio"].flat-menu').iCheck({
     checkboxClass: 'icheckbox_flat-blue', 
     radioClass: 'iradio_flat-blue' 
+});
+
+$('input').on('ifChecked', function(event){
+    switch ($(this).data('lv')) {
+        case 3:
+            $(this).parents('.menu-group-checkbox').find('input[data-lv="1"]').iCheck('check');
+            $(this).parents('.child-menu-box').find('input[data-lv="2"]').iCheck('check');
+            break;
+        case 2:
+            $(this).parents('.menu-group-checkbox').find('input[data-lv="1"]').iCheck('check');
+            break;
+        default:
+            break;
+    }
+});
+
+$('input').on('ifUnchecked', function(event){
+    switch ($(this).data('lv')) {
+        case 2:
+            $(this).parents('.child-menu-box').find('input').iCheck('uncheck');
+            break;
+        case 1:
+            $(this).parents('.menu-group-checkbox').find('input').iCheck('uncheck');
+            break;
+        default:
+            break;
+    }
 });
 </script>
 

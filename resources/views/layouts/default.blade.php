@@ -243,7 +243,7 @@ $.ajaxSetup({
                     </a>
                     <ul class="treeview-menu">
                       @foreach($value->son_menus as $row)
-                      <li>
+                      <li class="@if($key_data->get('active') == $value->name_index) active @endif">
                         <a href="{{ $row->url }}">
                           <i class="fa fa-circle-o"></i>
                           {{ $row->name }}
@@ -277,7 +277,7 @@ $.ajaxSetup({
             </a>
         </li>
 
-        <li class="@if($key_data->get('active') == 'menus') active @endif">
+        <li class="@if($key_data->get('active') == 'users') active @endif">
             <a href="/admin/users">
                 <i class="fa fa-users"></i>
                 <span>用户管理</span>
@@ -442,8 +442,6 @@ $.ajaxSetup({
 
 // 当元素被选中 自动展开父级栏目
 $('.sidebar-menu').find('.active').parents('.treeview').addClass('active menu-open');
-console.log($('.sidebar-menu').find('.active').parents('.treeview'));
-$('.sidebar-menu').find('.active').parents('.treeview').parents('.treeview').addClass('active menu-open');
 
 // breadcrumb 导航
 var menus = $('.sidebar-menu').find('li.active > a');
