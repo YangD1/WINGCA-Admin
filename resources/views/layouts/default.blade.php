@@ -140,8 +140,12 @@ $.ajaxSetup({
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="/statics/plugin/adminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+                <a href="{{ route('user.edit',Auth::user()->id) }}">
+                  <div class="pop-mask">
+                    <i class="fa fa-camera"></i>
+                  </div>
+                </a>
+                  <img src="/statics/plugin/adminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 <p>
                   {{ Auth::user()->name }} - {!! Auth::user()->role_name() !!}
                   <!-- <small>Member since Nov. 2012</small> -->

@@ -3,6 +3,11 @@
 @section('pageHeader','')
 @section('pageSmallHeader','')
 @section('content')
+<link rel="stylesheet" href="/statics/plugin/dropzone/dropzone.min.css">
+<style>
+    .dropzone{ padding: 0; border: 1px solid #d2d6de}
+    .dz-image img{ width: 100% }
+</style>
    <div class="row">
     <div class="col-sm-3"></div>
         <div class="col-sm-6">
@@ -11,10 +16,21 @@
             <i class="fa fa-black-tie"></i>
                 <h3 class="box-title">个人信息</h3>
             </div>
+            <div id="avatar_path" style="display: none;">
+                <div id="preview-template">
+                    <img data-dz-thumbnail src="{{ $key_data->get('data')->avatar_path }}" alt="">
+                </div>
+            </div>
             <form method="post" action="{{ route('user.update',$key_data->get('data')->id) }}" class="psersonal-form">
                 {{ method_field('PATCH') }}
                 {{ csrf_field() }}
             <div class="box-body">
+                    <div class="form-group">
+                       <label class="col-sm-3 control-label">头像</label> 
+                       <div class="col-sm-4">
+                        <p id="material_path" class="dropzone needsclick dz-clickable"></p>
+                       </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">姓名：</label>
                         <div class="col-sm-6">
@@ -58,4 +74,38 @@
         </div>
     <div class="col-xs-3"></div>
    </div> 
+
+<script src="/statics/plugin/dropzone/dropzone.min.js"></script>
+<script>
+    // var Dropzone = new Dropzone("div#myId", { url: "/file/post" });
+    // console.log($('#preview-template').prop("outerHTML"));
+    var _method = $('meta[name="csrf-token"]').attr('content')
+    // console.log(_method);
+    Dropzone.autoDiscover = false;
+    $("#material_path").dropzone({
+        url: "{{ route('file_upload') }}",
+        headers: {
+        'X-CSRF-TOKEN': _method
+        },
+        acceptedFiles: 'image/*,.zip,.rar,.doc,.docx',
+        maxFile: 1,
+        addRemoveLinks: true,
+        dictRemoveFile: "取消上传",
+        clickable: true,
+        init: function() {
+            $('#material_path .dz-default').html(`<img data-dz-thumbnail src="{{ $key_data->get('data')->avatar_path }}">`);
+        },
+        success: function (i, data) {
+            console.log(data);
+            return;
+            toastr.success('上传成功');
+            $('#material_path').append(`
+                <input type='hidden' name='avatar_path[]' value='${data}'>
+            `);
+        },
+        error: function () {
+            toastr.warning('上传失败');
+        }
+    });
+</script>
 @stop

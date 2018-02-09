@@ -10,12 +10,14 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\Http\Controllers\Tools;
 
 class userManageController extends Controller
 {
+    public $tools;
     function __construct()
     {
-        
+        $this->tools = new Tools();
     }
     /**
      * Display a listing of the resource.
@@ -60,7 +62,7 @@ class userManageController extends Controller
     }
 
     /**
-     * 编辑当前登录用户自己的信息
+     * 编辑当前登录用户自己的信息(视图)
      */
     public function edit($id, Request $request)
     {
@@ -74,7 +76,7 @@ class userManageController extends Controller
     }
 
     /**
-     * 用户更新信息
+     * 用户更新信息(PATCH提交请求)
      */
     public function update(Request $request, $id)
     {

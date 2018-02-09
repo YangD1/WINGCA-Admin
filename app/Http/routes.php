@@ -22,6 +22,9 @@ Route::get('logout', 'SessionController@logout')->name('logout');
 Route::get('register', 'SessionController@register')->name('register');
 Route::post('register', 'SessionController@register_store')->name('register');
 
+# 文件上传
+Route::post('file_upload', 'Tools@file_upload')->name('file_upload');
+
 
 /**
  * 后台路由
