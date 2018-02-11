@@ -89,10 +89,14 @@ class userManageController extends Controller
 
         $data = [];
         $data['name'] = $request->name;
+        // 更新密码
         if ($request->password) {
             $data['password'] = bcrypt($request->password);
         }
-
+        // 更新头像
+        if($request->avatar_path){
+            $data['avatar_path'] = $request->avatar_path;
+        }
         $user->update($data);
 
         session()->flash('success', '个人信息更新成功！');

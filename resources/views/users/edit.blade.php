@@ -26,7 +26,7 @@
                 {{ csrf_field() }}
             <div class="box-body">
                     <div class="form-group">
-                       <label class="col-sm-3 control-label">头像</label> 
+                       <label class="col-sm-3 control-label">头像：</label> 
                        <div class="col-sm-4">
                         <p id="material_path" class="dropzone needsclick dz-clickable"></p>
                        </div>
@@ -77,10 +77,7 @@
 
 <script src="/statics/plugin/dropzone/dropzone.min.js"></script>
 <script>
-    // var Dropzone = new Dropzone("div#myId", { url: "/file/post" });
-    // console.log($('#preview-template').prop("outerHTML"));
     var _method = $('meta[name="csrf-token"]').attr('content')
-    // console.log(_method);
     Dropzone.autoDiscover = false;
     $("#material_path").dropzone({
         url: "{{ route('file_upload') }}",
@@ -89,18 +86,14 @@
         },
         acceptedFiles: 'image/*,.zip,.rar,.doc,.docx',
         maxFile: 1,
-        addRemoveLinks: true,
-        dictRemoveFile: "取消上传",
         clickable: true,
         init: function() {
-            $('#material_path .dz-default').html(`<img data-dz-thumbnail src="{{ $key_data->get('data')->avatar_path }}">`);
+            $('#material_path .dz-default').html(`<img data-dz-thumbnail src="/{{ $key_data->get('data')->avatar_path }}">`);
         },
         success: function (i, data) {
-            console.log(data);
-            return;
             toastr.success('上传成功');
             $('#material_path').append(`
-                <input type='hidden' name='avatar_path[]' value='${data}'>
+                <input type='hidden' name='avatar_path' value='${data}'>
             `);
         },
         error: function () {

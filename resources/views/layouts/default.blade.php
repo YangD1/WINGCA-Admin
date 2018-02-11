@@ -133,7 +133,7 @@ $.ajaxSetup({
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="/statics/plugin/adminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="/{{ Auth::user()->avatar_path }}" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs">{{ Auth::user()->name }}</span>
             </a>
@@ -145,7 +145,7 @@ $.ajaxSetup({
                     <i class="fa fa-camera"></i>
                   </div>
                 </a>
-                  <img src="/statics/plugin/adminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                  <img src="/{{ Auth::user()->avatar_path }}" class="img-circle" alt="User Image">
                 <p>
                   {{ Auth::user()->name }} - {!! Auth::user()->role_name() !!}
                   <!-- <small>Member since Nov. 2012</small> -->
