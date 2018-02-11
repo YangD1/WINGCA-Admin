@@ -77,6 +77,9 @@
 
 <script src="/statics/plugin/dropzone/dropzone.min.js"></script>
 <script>
+     
+</script>
+<script>
     var _method = $('meta[name="csrf-token"]').attr('content')
     Dropzone.autoDiscover = false;
     $("#material_path").dropzone({
@@ -90,11 +93,15 @@
         init: function() {
             $('#material_path .dz-default').html(`<img data-dz-thumbnail src="/{{ $key_data->get('data')->avatar_path }}">`);
         },
+        drop: function() {
+            $("input[type='submit']").attr("disabled",true);
+        },
         success: function (i, data) {
             toastr.success('上传成功');
             $('#material_path').append(`
                 <input type='hidden' name='avatar_path' value='${data}'>
             `);
+            $("input[type='submit']").attr("disabled",false);
         },
         error: function () {
             toastr.warning('上传失败');
