@@ -68,7 +68,7 @@ class Tools extends Controller
         }
 
         $newFileName = md5(time().rand(0,10000)).'.'.$file->getClientOriginalExtension();
-        $imgbox = "\/uploadfiles/".date("Ymd",time())."/";
+        $imgbox = "uploadfiles/".date("Ymd",time())."/";
         if(!file_exists($imgbox)){
             // 创建目录，并设置权限
             mkdir($imgbox,0777, true);
@@ -85,7 +85,7 @@ class Tools extends Controller
         }
 
         // echo json_encode(['url'=>$savePath,'filename'=>$savePath]);
-        echo $savePath;
+        echo "/".$savePath;
 
     }
 
