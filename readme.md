@@ -2,10 +2,10 @@
 ### 相关
 PHP >= 5.5.9
 
-框架：[Laravel 5.1](https://laravel.com/docs/5.1)
+框架：[Laravel 5.1](https://laravel.com/docs/5.1)
 [中文文档](https://d.laravel-china.org/docs/5.1)
 
-前端：[AdminLTE](https://adminlte.io/themes/AdminLTE/index2.html)
+前端：[AdminLTE](https://adminlte.io/themes/AdminLTE/index2.html)
 
 ### 安装
 
@@ -26,16 +26,15 @@ PHP >= 5.5.9
 
 5.数据填充
 `php artisan db:seed`
-### 使用 
-后台访问：`localhost/admin`
+### 使用
+后台访问：`localhost/admin`
 
 默认账号：
 ```
-admin@wingca.com
+admin@wingca.com
 admin
 ```
 
 ### 功能
-默认集成：
-菜单管理，用户管理，角色管理
+默认集成： 菜单管理，用户管理，角色管理
 
