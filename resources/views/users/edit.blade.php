@@ -77,9 +77,6 @@
 
 <script src="/statics/plugin/dropzone/dropzone.min.js"></script>
 <script>
-     
-</script>
-<script>
     var _method = $('meta[name="csrf-token"]').attr('content')
     Dropzone.autoDiscover = false;
     $("#material_path").dropzone({
@@ -91,7 +88,7 @@
         maxFile: 1,
         clickable: true,
         init: function() {
-            $('#material_path .dz-default').html(`<img data-dz-thumbnail src="/{{ $key_data->get('data')->avatar_path }}">`);
+            $('#material_path .dz-default').html(`<img data-dz-thumbnail src="{{ $key_data->get('data')->avatar_path }}">`);
         },
         drop: function() {
             $("input[type='submit']").attr("disabled",true);
