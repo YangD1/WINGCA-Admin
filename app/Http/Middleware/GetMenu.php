@@ -24,7 +24,7 @@ class GetMenu
             // 查找所有一级栏目
             $parent_menus = Menu::whereRaw("FIND_IN_SET(id,?) AND menu_lv = 1",[$access_menus_id])->get();
             foreach( $parent_menus as $k => $v ){
-                $v->child_menus = Menu::whereRaw("parent_id = ?",[$v->id])->get();
+                $v->child_menus = Menu::whereRaw("FIND_IN_SET(id,?) AND parent_id = ?",[$access_menus_id,$v->id])->get();
                 foreach($v->child_menus as $key => $value){
                     $value->son_menus = Menu::whereRaw("parent_id = ?",[$value->id])->get();  
                 }
