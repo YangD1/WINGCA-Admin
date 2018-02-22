@@ -110,7 +110,7 @@
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>icon: <small><a href="" target="_blank">查看相关的图标列表</a></small></label>
+                    <label>icon: <small><a href="https://adminlte.io/themes/AdminLTE/pages/UI/icons.html" target="_blank">查看相关的图标列表</a></small></label>
                     <input type="text" name="icon" class="form-control" placeholder="填写图标名称">
                 </div>
                 <div class="col-sm-1"></div>
