@@ -43,7 +43,7 @@
                                     <td>{{ $v->name }}</td>
                                     <td>
                                         <div class="btn-group">
-                                          <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" data-toggle="modal" data-target="#menu-info">查看</button>
+                                          <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" >查看</button>
                                           <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
                                             <span class="caret"></span>
                                             <span class="sr-only">Toggle Dropdown</span>
@@ -275,7 +275,7 @@ let menu_info = function(id){
                     }
                 }
             });
-            
+            $('#menu-info').modal(); 
             $('.pop-background').css('display','none');
         }
     });

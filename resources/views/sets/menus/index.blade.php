@@ -34,7 +34,7 @@
                                         <th rowspan="1" colspan="1">#</th>
                                         <th rowspan="1" colspan="1">菜单名称</th>
                                         <th rowspan="1" colspan="1">url</th>
-                                        <th rowspan="1" colspan="1">父级栏目id</th>
+                                        <th rowspan="1" colspan="1">父级菜单id</th>
                                         <th rowspan="1" colspan="1">icon</th>
                                         <th rowspan="1" colspan="1">操作</th>
                                     </tr>
@@ -50,7 +50,7 @@
                                     <td><i class="fa fa-{{ $v->icon }}"></i> {{ $v->icon }}</td>
                                     <td>
                                         <div class="btn-group">
-                                          <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" data-toggle="modal" data-target="#menu-info">查看</button>
+                                          <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" >查看</button>
                                           <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
                                             <span class="caret"></span>
                                             <span class="sr-only">Toggle Dropdown</span>
@@ -126,11 +126,11 @@
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>父级栏目:</label>
+                    <label>父级菜单:</label>
                     <br>
                     <div class="col-sm-6" style="padding: 0">
                         <select class="js-example-basic-single" id='menu-update-select' name="parent_id">
-                          <option value="0">一级栏目</option>
+                          <option value="0">一级菜单</option>
                           @foreach( $key_data->get('parent_data') as $v )
                           <option value="{{ $v->id }}">{{ $v->name }}</option>
                           @endforeach
@@ -229,11 +229,11 @@
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
-                    <label>父级栏目:</label>
+                    <label>父级菜单:</label>
                     <br>
                     <div class="col-sm-6" style="padding: 0">
                         <select class="js-example-basic-single" name="parent_id">
-                          <option value="0">一级栏目</option>
+                          <option value="0">一级菜单</option>
                           @foreach( $key_data->get('parent_data') as $v )
                           <option value="{{ $v->id }}">{{ $v->name }}</option>
                           @endforeach
@@ -284,10 +284,10 @@ let menu_info = function(id){
             // 默认选中option和select2的默认值
             $('#menu-info').find(option_value).attr('selected',true);
             $('#menu-update-select').select2("val",[data.parent_id]);
-            // 禁止选中栏目自己本身成为子栏目
+            // 禁止选中菜单自己本身成为子菜单
             // $('#menu-info').find(this_option).attr('disabled',true);
             // $('#menu-info').find(this_option).select2({disabled: true});
-            
+            $('#menu-info').modal();            
             $('.pop-background').css('display','none');
         }
     });

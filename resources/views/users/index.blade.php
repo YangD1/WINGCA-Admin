@@ -41,7 +41,7 @@
                                     <td>{!! $v->role or "没有选择角色" !!}</td>
                                     <td>
                                         <div class="btn-group">
-                                          <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" data-toggle="modal" data-target="#menu-info">查看</button>
+                                          <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" >查看</button>
                                           <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
                                             <span class="caret"></span>
                                             <span class="sr-only">Toggle Dropdown</span>
@@ -272,7 +272,7 @@ let menu_info = function(id){
             // 默认选中option和select2的默认值
             $('#menu-info').find(option_value).attr('selected',true);
             $('#menu-update-select').select2("val",[data.role_id]);
-
+            $('#menu-info').modal();
             $('.pop-background').css('display','none');
         }
     });
