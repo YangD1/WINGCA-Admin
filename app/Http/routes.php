@@ -31,13 +31,7 @@ Route::post('file_upload', 'Tools@file_upload')->name('file_upload');
  */
 
 # 后台根路径
-Route::get('/admin',['middleware'=>'CheckAdminSignIn',function (Request $request) {
-    $key_data = collect([
-        'menus' => $request->menus,
-        'active' => "home"
-    ]);
-    return view('index/index',compact('key_data'));
-}])->name('admin');
+Route::get('/admin',"adminController@index")->name('admin')->middleware('CheckAdminSignIn');
 
 # 其他 后台路由
 Route::group(['prefix' => 'admin'],function(){
