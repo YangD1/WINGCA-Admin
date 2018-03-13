@@ -22,6 +22,10 @@
                     <input type="password" name="password" class="form-control" placeholder="Password">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
+                <div class="form-group code">
+                    <input type="text" class="form-control" placeholder="Code" name="captcha">
+                    {!! captcha_img() !!}
+                </div>
                 <div class="row">
                     <div class="col-xs-4" style="float: right">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">登陆</button>
@@ -29,11 +33,12 @@
                 </div>
             </form>
 
-            <div class="social-auth-links text-center">
+            <!-- <div class="social-auth-links text-center">
                 <p>- OR -</p>
                 <a href="#" class="btn btn-block  btn-wechat btn-flat">
                     <i class="fa fa-wechat"></i> 使用微信登陆</a>
-            </div>
+            </div> -->
+            
             <!-- /.social-auth-links -->
 
         </div>

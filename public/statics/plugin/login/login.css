@@ -29,7 +29,7 @@ body {
     color: #fff;
 }
 
-.btn-wechat{
+.btn-wechat {
     color: rgb(255, 255, 255);
     background-color: rgb(60, 176, 52);
     border-color: rgba(0, 0, 0, 0.2);
@@ -37,11 +37,21 @@ body {
 
 .btn.focus,
 .btn:focus,
-.btn:hover{
+.btn:hover {
     color: #fff;
 }
 
-.login-logo{
+.login-logo {
     color: #fff;
     text-shadow: 0 0 10px #000;
+}
+
+input[name="captcha"]{
+    width: 120px;
+    float: left;
+    margin-right: 5px;
+}
+
+.code img{
+    height: 34px;
 }

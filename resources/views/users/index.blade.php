@@ -153,14 +153,14 @@
       {{ csrf_field() }}
       <div class="modal-body">
             <div class="form-group">
-                <input type="hidden" name="id" value="">
+                <input type="hidden" name="id" v-bind:value="object.id">
             </div>
 
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <label>名称:</label>
-                    <input type="text" name="name" class="form-control" placeholder="菜单名称">
+                    <input type="text" name="name" v-bind:value="object.name" class="form-control" placeholder="菜单名称">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
@@ -168,7 +168,7 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <label>email:</label>
-                    <input type="text" name="email" class="form-control" disabled="true" placeholder="登录邮箱">
+                    <input type="text" name="email" v-bind:value="object.email" class="form-control" disabled="true" placeholder="登录邮箱">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
@@ -254,6 +254,18 @@ $('.del-btn').click(function(){
     $('#menu-del').find("input[name='id']").val($(this).data('id'));
 });
 
+// 信息变量
+let appData = new Vue({
+    el: "#menu-info",
+    data: {
+        object: {
+            id: "", 
+            name: "",
+            email: "" 
+        }
+    }
+});
+
 // 查看菜单项目
 let menu_info = function(id){
     $.ajax({
@@ -265,11 +277,11 @@ let menu_info = function(id){
         },
         success: function(data){
             data = JSON.parse(data);
-            option_value = "option[value='"+data.role_id+"']";
-            $('#menu-info').find("input[name='id']").val(data.id);
-            $('#menu-info').find("input[name='name']").val(data.name);
-            $('#menu-info').find("input[name='email']").val(data.email);
+            appData.object.id = data.id;
+            appData.object.name = data.name;
+            appData.object.email = data.email;
             // 默认选中option和select2的默认值
+            let option_value = "option[value='"+data.role_id+"']";
             $('#menu-info').find(option_value).attr('selected',true);
             $('#menu-update-select').select2("val",[data.role_id]);
             $('#menu-info').modal();

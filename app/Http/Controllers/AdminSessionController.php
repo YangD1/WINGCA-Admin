@@ -29,8 +29,12 @@ class AdminSessionController extends Controller
         // 格式验证
        $this->validate($request, [
           'email' => 'required|email|max:255',
-          'password' => 'required'
-       ]);
+          'password' => 'required',
+          'captcha' => 'required|captcha'
+       ],[
+            'captcha.required' => '验证码不能为空',
+            'captcha.captcha' => '验证码错误'
+        ]);
 
        // 需要 用户验证 的字段
        $credentials = [

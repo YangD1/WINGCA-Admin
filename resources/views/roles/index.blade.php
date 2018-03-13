@@ -150,14 +150,14 @@
       {{ csrf_field() }}
       <div class="modal-body">
             <div class="form-group">
-                <input type="hidden" name="id" value="">
+                <input type="hidden" name="id" v-bind:value="object.id">
             </div>
 
             <div class="form-group">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <label>名称:</label>
-                    <input type="text" name="name" class="form-control" placeholder="菜单名称">
+                    <input type="text" name="name" v-bind:value="object.name" class="form-control" placeholder="菜单名称">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
@@ -250,6 +250,16 @@ $('.del-btn').click(function(){
     $('#menu-del').find("input[name='id']").val($(this).data('id'));
 });
 
+let appData = new Vue({
+    el: "#menu-info",
+    data: {
+        object: {
+            id: "", 
+            name: "",
+        }
+    }
+});
+
 // 查看菜单项目
 let menu_info = function(id){
     $.ajax({
@@ -261,11 +271,10 @@ let menu_info = function(id){
         },
         success: function(data){
             data = JSON.parse(data);
-            console.log(data);
-            option_value = "option[value='"+data.parent_id+"']";
-            $('#menu-info').find("input[name='id']").val(data.id);
-            $('#menu-info').find("input[name='name']").val(data.name);
+            appData.object.id = data.id;
+            appData.object.name = data.name;
             // 默认选中checkbox的默认值
+            option_value = "option[value='"+data.parent_id+"']";
             $('#menu-info .menu-group .menu-group-item').find('input').iCheck('uncheck');
             $('#menu-info .menu-group .menu-group-item').each(function(){
                 var that = $(this).find('input');
