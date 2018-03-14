@@ -32,3 +32,5 @@
 <link rel="stylesheet" href="/statics/css/main.min.css">
 <!-- jQuery 3 -->
 <script src="/statics/plugin/adminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- vue -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
