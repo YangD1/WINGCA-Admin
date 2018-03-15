@@ -73,19 +73,23 @@ class RolesController extends Controller
      */
     public function update(Request $request)
     {
-        //
         $role = Role::find($request->id);
+
         $this->validate($request, [
-            'name' => 'required|max:50',
-            'access_menus_id' => 'required'
+            'name' => 'required|max:50'
         ],[
-            'name.required' => '请填写角色名称',
-            'access_menus_id.required' => '必须选择可以管理的栏目'
+            'name.required' => '请填写角色名称'
         ]);
+
+        
 
         $data = [];
         $data['name'] = $request->name;
-        $data['access_menus_id'] = implode(',',$request->access_menus_id);
+
+        if($request->access_menus_id){
+            $data['access_menus_id'] = implode(',',$request->access_menus_id);
+        }
+        
         $role->update($data);
 
         session()->flash('success', '用户信息更新成功！');
