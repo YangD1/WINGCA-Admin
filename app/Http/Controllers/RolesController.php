@@ -49,17 +49,20 @@ class RolesController extends Controller
     {
         //
        $this->validate($request, [
-            'name' => 'required|max:50',
-            'access_menus_id' => 'required'
+            'name' => 'required|max:50'
         ],[
-            'name.required' => '请填写角色名称',
-            'access_menus_id.required' => '必须选择可以管理的栏目'
+            'name.required' => '请填写角色名称'
         ]);
 
-        Role::create([
-            'name' => $request->name,
-            'access_menus_id' => implode(',',$request->access_menus_id)
-        ]);
+        $data = [];
+
+        $data['name'] = $request->name;
+        
+        if($request->access_menus_id){
+            $data['access_menus_id'] = $request->access_menus_id;
+        }
+
+        Role::create($data);
 
         session()->flash('success', '角色创建成功！');
         return redirect()->route('roles.index');
