@@ -26,15 +26,27 @@ class AdminSessionController extends Controller
      */
     public function login_store(Request $request)
     {
+        // session()->forget('data');
+        $lt = (!empty(session('ls'))) ? session('ls') : 0; 
+        echo session('ls');
+
+        $validate_obj = [
+            'email' => 'required|email|max:255',
+            'password' => 'required'
+        ];
+
+        $validate_other = [];
+
+        if(session('ls') >= 3){
+            $validate_obj['captcha'] = "required|captcha";
+            $validate_other = [
+                'captcha.required' => '验证码不能为空',
+                'captcha.captcha' => '验证码错误'
+            ];
+        }
+
         // 格式验证
-       $this->validate($request, [
-          'email' => 'required|email|max:255',
-          'password' => 'required',
-          'captcha' => 'required|captcha'
-       ],[
-            'captcha.required' => '验证码不能为空',
-            'captcha.captcha' => '验证码错误'
-        ]);
+       $this->validate($request, $validate_obj, $validate_other);
 
        // 需要 用户验证 的字段
        $credentials = [
@@ -46,8 +58,12 @@ class AdminSessionController extends Controller
        if ( Auth::attempt($credentials) ) {
            // 认证通过生成会话之后要验证下权限表中相关的数据，然后进行操作
            session()->flash('success', '欢迎回来！');
+           session()->forget('ls');
            return redirect()->route('admin', [Auth::user()]);
        } else {
+           // 登录失败递增
+           $lt = $lt + 1;
+           session(['ls'=>$lt]);
            session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
            return redirect()->back();
        }

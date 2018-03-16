@@ -22,10 +22,12 @@
                     <input type="password" name="password" class="form-control" placeholder="Password">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
+                @if(session('ls') >= 3)
                 <div class="form-group code">
                     <input type="text" class="form-control" placeholder="Code" name="captcha">
-                    {!! captcha_img() !!}
+                    <img src="{{captcha_src()}}" style="cursor: pointer" onclick="this.src='/captcha/default?'+Math.random()" alt="验证码">
                 </div>
+                @endif
                 <div class="row">
                     <div class="col-xs-4" style="float: right">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">登陆</button>
