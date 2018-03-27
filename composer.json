@@ -9,7 +9,7 @@
         "laravel/framework": "5.1.*",
         "mews/captcha": "^2.1",
         "overtrue/laravel-lang": "~3.0",
-        "doctrine/dbal": "^2.6"
+        "doctrine/dbal": "2.5.13"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
