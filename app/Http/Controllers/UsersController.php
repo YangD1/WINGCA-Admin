@@ -99,7 +99,7 @@ class UsersController extends Controller
         $user->update($data);
 
         session()->flash('success', '用户信息更新成功！');
-        return redirect()->route('users.index');
+        return redirect()->back();
     }
 
     /**

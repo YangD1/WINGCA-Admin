@@ -82,7 +82,7 @@ class MenusController extends Controller
 
         if($request->parent_id == $request->id){
             session()->flash('warning','不可以选中栏目本身为父栏目');
-            return redirect()->route('menus.index');
+            return redirect()->back();
         };
 
         $data = [
@@ -95,7 +95,7 @@ class MenusController extends Controller
         ];
         Menu::find($request->id)->update($data);
         session()->flash('success','更新成功');
-        return redirect()->route('menus.index');
+        return redirect()->back();
     }
 
     /**
