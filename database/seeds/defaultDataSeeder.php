@@ -35,7 +35,7 @@ class defaultDataSeeder extends Seeder
         ]); 
 
         // 关联数据表
-        DB::table('user_roles')->insert([
+        DB::table('role_user')->insert([
             'user_id' => "1",
             'role_id' => '1'
         ]);
