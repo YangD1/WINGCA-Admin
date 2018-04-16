@@ -3,6 +3,50 @@
 <head>
     @include('layouts._header')
     <link rel="stylesheet" href="/statics/plugin/login/login.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* background: black; */
+            /* background: linear-gradient(to bottom, #dcdcdc 0%, palevioletred 100%); */
+        }
+
+        #main-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        #canvas{
+            position: absolute;
+            top: 0;
+            z-index: -1;
+        }
+
+        .filter {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #fe5757;
+            animation: colorChange 30s ease-in-out infinite;
+            animation-fill-mode: both;
+            mix-blend-mode: overlay;
+            
+        }
+
+        @keyframes colorChange {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: .7;
+            }
+        }    
+    </style>
 </head>
 <body class="hold-transition login-page" style="background: url('/statics/plugin/login/b1.jpg'); background-size: cover;">
     <div class="login-box">
@@ -48,6 +92,7 @@
     </div>
     <!-- /.login-box -->
 
+
 @include('layouts._footer')
 <script>
 @if(count($errors) > 0)
@@ -62,5 +107,10 @@ toastr.warning("{{ $error }}", '登陆失败');
 @endif
 </script>
 </body>
-
+   <canvas id="canvas"></canvas> 
+    <script src="/statics/plugin/canvasstar.js"></script>
+   <script>
+       var CanvasStar = new CanvasStar;
+        CanvasStar.init(); 
+   </script>
 </html>
