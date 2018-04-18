@@ -13,15 +13,7 @@
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                     </button>
-                  <!-- 拓展菜单 -->
-                    <!-- <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul> -->
                 </div>
-                <small>&nbsp;&nbsp;&nbsp;&nbsp;Tip: 注意表单展示的时候根据宽度尺寸来隐藏一些显示内容</small>
             </div>
             <div class="box-body">
 
