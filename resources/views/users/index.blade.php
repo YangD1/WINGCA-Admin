@@ -14,51 +14,38 @@
                     <span class="sr-only">Toggle Dropdown</span>
                     </button>
                 </div>
-                <small>&nbsp;&nbsp;&nbsp;&nbsp;Tip: 注意表单展示的时候根据宽度尺寸来隐藏一些显示内容</small>
             </div>
             <div class="box-body">
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <table id="users" class="table table-bordered table-hover " >
-                            <thead>
-                                <tr role="row">
-                                    <tr>
-                                        <th rowspan="1" colspan="1">#</th>
-                                        <th rowspan="1" colspan="1">用户名</th>
-                                        <th rowspan="1" colspan="1">e-mail</th>
-                                        <th rowspan="1" colspan="1">当前权限</th>
-                                        <th rowspan="1" colspan="1">操作</th>
-                                    </tr>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($key_data->get('datas') as $v)
-                                <tr role="row" >
-                                    <td>{{ $v->id }}</td>
-                                    <td>{{ $v->name }}</td>
-                                    <td>{{ $v->email }}</td>
-                                    <td>{!! $v->role or "没有选择角色" !!}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                          <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" >查看</button>
-                                          <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                          </button>
-                                          <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#" class="del-btn" data-id="{{ $v->id }}" data-toggle="modal" data-target="#menu-del">删除</a></li>
-                                          </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {!! $key_data->get('datas')->render() !!}
-                    </div>
+                <div class="table-responsive">
+                    <table id="users" class="table table-bordered table-hover " >
+                        <th rowspan="1" colspan="1">#</th>
+                        <th rowspan="1" colspan="1">用户名</th>
+                        <th rowspan="1" colspan="1">e-mail</th>
+                        <th rowspan="1" colspan="1">当前权限</th>
+                        <th rowspan="1" colspan="1">操作</th>
+                        @foreach($key_data->get('datas') as $v)
+                        <tr role="row" >
+                            <td>{{ $v->id }}</td>
+                            <td>{{ $v->name }}</td>
+                            <td>{{ $v->email }}</td>
+                            <td>{!! $v->role or "没有选择角色" !!}</td>
+                            <td style="min-width: 88px">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" >查看</button>
+                                    <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" class="del-btn" data-id="{{ $v->id }}" data-toggle="modal" data-target="#menu-del">删除</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </table>
+                    {!! $key_data->get('datas')->render() !!}
                 </div>
-
             </div>
         </div>
     </div>

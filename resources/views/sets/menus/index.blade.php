@@ -26,43 +26,35 @@
             <div class="box-body">
 
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="table-responsive">
                         <table id="menus" class="table table-bordered table-hover " >
-                            <thead>
-                                <tr role="row">
-                                    <tr>
-                                        <th rowspan="1" colspan="1">#</th>
-                                        <th rowspan="1" colspan="1">菜单名称</th>
-                                        <th rowspan="1" colspan="1">url</th>
-                                        <th rowspan="1" colspan="1">父级菜单id</th>
-                                        <th rowspan="1" colspan="1">icon</th>
-                                        <th rowspan="1" colspan="1">操作</th>
-                                    </tr>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($key_data->get('datas') as $v)
-                                <tr role="row" >
-                                    <td>{{ $v->id }}</td>
-                                    <td>{{ $v->name }}</td>
-                                    <td>{{ $v->url }}</td>
-                                    <td>{{ $v->parent_id }}</td>
-                                    <td><i class="fa fa-{{ $v->icon }}"></i> {{ $v->icon }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                          <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" >查看</button>
-                                          <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                          </button>
-                                          <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#" class="del-btn" data-id="{{ $v->id }}" data-toggle="modal" data-target="#menu-del">删除</a></li>
-                                          </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
+                            <th rowspan="1" colspan="1">#</th>
+                            <th rowspan="1" colspan="1">菜单名称</th>
+                            <th rowspan="1" colspan="1">url</th>
+                            <th rowspan="1" colspan="1">父级菜单id</th>
+                            <th rowspan="1" colspan="1">icon</th>
+                            <th rowspan="1" colspan="1">操作</th>
+                            @foreach($key_data->get('datas') as $v)
+                            <tr role="row" >
+                                <td>{{ $v->id }}</td>
+                                <td>{{ $v->name }}</td>
+                                <td>{{ $v->url }}</td>
+                                <td>{{ $v->parent_id }}</td>
+                                <td><i class="fa fa-{{ $v->icon }}"></i> {{ $v->icon }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" >查看</button>
+                                        <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#" class="del-btn" data-id="{{ $v->id }}" data-toggle="modal" data-target="#menu-del">删除</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
                         </table>
                         {!! $key_data->get('datas')->render() !!}
                     </div>
