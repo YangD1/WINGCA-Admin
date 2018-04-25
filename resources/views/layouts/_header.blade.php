@@ -4,14 +4,14 @@
   <title>@yield('title','WINGCA') - WINGCA admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="/statics/plugin/adminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/statics/plugin/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="/statics/plugin/adminLTE/bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/statics/plugin/AdminLTE/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="/statics/plugin/adminLTE/bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="/statics/plugin/AdminLTE/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="/statics/plugin/adminLTE/dist/css/AdminLTE.min.css">
-  <link rel="stylesheet" href="/statics/plugin/adminLTE/dist/css/skins/skin-black.min.css">
+  <link rel="stylesheet" href="/statics/plugin/AdminLTE/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/statics/plugin/AdminLTE/dist/css/skins/skin-black.min.css">
   <!-- toastr plugin -->
   <link rel="stylesheet" href="/statics/plugin/toastr/toastr.min.css">
 
@@ -31,6 +31,6 @@
 
 <link rel="stylesheet" href="/statics/css/main.min.css">
 <!-- jQuery 3 -->
-<script src="/statics/plugin/adminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/statics/plugin/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- vue -->
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
