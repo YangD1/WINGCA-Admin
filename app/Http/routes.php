@@ -14,6 +14,12 @@ use Illuminate\Http\Request;
 /**
  * 前台路由
  */
+# 默认根访问
+Route::get('/',function(){
+    return view('welcome');
+});
+
+
 # 登陆会话 (User)
 Route::get('login', 'SessionController@login')->name('login');
 Route::post('login', 'SessionController@login_store')->name('login');
