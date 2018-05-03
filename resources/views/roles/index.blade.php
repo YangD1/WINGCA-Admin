@@ -27,7 +27,7 @@
                             <td>{{ $v->name }}</td>
                             <td style="min-width: 88px">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" >查看</button>
+                                    <button type="button" class="btn btn-sm btn-warning" onclick="_update( {{ $v->id }} )" >查看</button>
                                     <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
@@ -54,7 +54,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">【菜单信息】</h4>
+        <h4 class="modal-title"></h4>
       </div>
       <form method="POST" action="{{ route('roles.update') }}">
       {{ method_field('PATCH') }}
@@ -177,7 +177,7 @@ let appData = new Vue({
 let mel = $('#main-modal');
 
 // 查看菜单项目
-let menu_info = function(id){
+let _update = function(id){
     $.ajax({
         url: "{{ route('roles.info') }}",
         data: {id: id},
