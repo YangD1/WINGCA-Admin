@@ -7,13 +7,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <div class="btn-group">
-                    <button type="button" data-toggle="modal" data-target="#menu-add" class="btn btn-success">添加菜单</button>
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                </div>
+                <button type="button" onclick="menu_add()" class="btn btn-success">添加菜单</button>
             </div>
             <div class="box-body">
                 <div class="table-responsive">
@@ -55,17 +49,17 @@
 
 
 <!-- 查看/修改 弹窗 -->
-<div class="modal fade" id="menu-info">
+<div class="modal fade" id="main-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">【菜单名称】</h4>
+        <h4 class="modal-title"></h4>
       </div>
       <form method="post" action="{{ route('menus.update') }}">
       {{ csrf_field() }}
-      {{ method_field('PATCH') }}
+      {{ method_field('patch') }}
       <div class="modal-body">
             <div class="form-group">
                 <input type="hidden" name="id" v-bind:value="object.id">
@@ -123,7 +117,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-        <button type="submit" class="btn btn-success">更新</button>
+        <button type="submit" class="btn btn-success">提交</button>
       </div>
       </form>
     </div>
@@ -161,90 +155,15 @@
 </div>
 <!-- /.modal -->
 
-<!-- 添加弹窗 -->
-<div class="modal fade" id="menu-add">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">添加菜单</h4>
-      </div>
-      <form method="post" action="{{ route('menus.store') }}">
-      {{ csrf_field() }}
-      <div class="modal-body">
-
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>名称:</label>
-                    <input type="text" name="name" class="form-control" placeholder="菜单名称">
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>url:</label>
-                    <input type="text" name="url" class="form-control" placeholder="填写有效的路径">
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>icon: <small><a href="" target="_blank">查看相关的图标列表</a></small></label>
-                    <input type="text" name="icon" class="form-control" placeholder="填写图标名称">
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>菜单索引：</label>
-                    <input type="text" name="name_index" class="form-control" placeholder="填写英文的菜单索引">
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>父级菜单:</label>
-                    <br>
-                    <div class="col-sm-6" style="padding: 0">
-                        <select class="js-example-basic-single" name="parent_id">
-                          <option value="0">一级菜单</option>
-                          @foreach( $key_data->get('parent_data') as $v )
-                          <option value="{{ $v->id }}">{{ $v->name }}</option>
-                          @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-        <button type="submit" class="btn btn-primary">添加</button>
-      </div>
-      </form>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
 <script>
-
+// 删除按钮
 $('.del-btn').click(function(){
     $('#menu-del').find("input[name='id']").val($(this).data('id'));
 });
 
 // vue 对象 
 let appData = new Vue({
-    el: "#menu-info",
+    el: "#main-modal",
     data: {
         object: {
             id: "", 
@@ -256,9 +175,12 @@ let appData = new Vue({
     }
 });
 
-// 查看菜单项目
-let menu_info = function(id){
+// 设置添加和更新数据公用的modal
+let mel = $('#main-modal'); 
 
+// 查看菜单项目
+let menu_info = function(id)
+{
     $.ajax({
         url: "{{ route('menus.info') }}",
         data: {id: id},
@@ -267,16 +189,48 @@ let menu_info = function(id){
             $('.pop-background').css('display','flex');
         },
         success: function(data){
+            // 修改公用modal title
+            mel.find('.modal-title').text(`管理 ${data.name}`);
+            // 修改公用modal表单提交地址
+            mel.find('form').attr('action',"{{ route('menus.update') }}");
+
+            // 模拟 patch 请求方式
+            mel.find('form').append(`{{ method_field('patch') }}`);
+            
+            // 设置 vue 对象
             Vue.set(appData,'object',data); 
+
             // 默认选中option和select2的默认值
             let option_value = "option[value='"+data.parent_id+"']";
-            $('#menu-info').find(option_value).attr('selected',true);
+            mel.find(option_value).attr('selected',true);
             $('#menu-update-select').select2("val",[data.parent_id]);
 
-            $('#menu-info').modal();            
+            mel.modal();            
             $('.pop-background').css('display','none');
         }
     });
+}
+
+let menu_add = function()
+{
+    // 修改公用modal title
+    mel.find('.modal-title').text('添加菜单');
+
+    // 修改公用modal表单提交地址
+    mel.find('form').attr('action',"{{ route('menus.create') }}");
+
+    // 去除提交方式input
+    mel.find('form input[name="_method"]').remove();
+
+    // 重置 select 的选择
+    mel.find('option').eq(0).attr('seleted',true);
+    $('#menu-update-select').select2("val",[0]);
+
+    // 清空 vue 对象中的数据
+    let data = {};
+    Vue.set(appData,'object',data); 
+
+    mel.modal();
 }
 
 $(document).ready(function() {

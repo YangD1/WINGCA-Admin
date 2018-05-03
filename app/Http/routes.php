@@ -66,7 +66,7 @@ Route::group(['prefix' => 'admin'],function(){
     # 菜单管理路由(Model: App/Models/Menu)
     Route::group(['middleware'=>'CheckAdminSignIn','prefix'=>'menus'],function(){
         Route::get('/','MenusController@index')->name('menus.index');
-        Route::post('store','MenusController@store')->name('menus.store');
+        Route::post('create','MenusController@create')->name('menus.create');
         Route::patch('update','MenusController@update')->name('menus.update');
         Route::delete('destroy','MenusController@destroy')->name('menus.destroy');
     

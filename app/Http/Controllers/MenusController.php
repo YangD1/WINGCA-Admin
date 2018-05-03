@@ -36,17 +36,9 @@ class MenusController extends Controller
     }
 
     /**
-     *
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * 提交新的 menu 项目
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         // 获取当前新建栏目的父级栏目的栏目等级
         $menu_lv = Menu::find($request->parent_id) ? (Menu::find($request->parent_id)->menu_lv) + 1 : 1; 
@@ -61,16 +53,6 @@ class MenusController extends Controller
         Menu::create($data);
         session()->flash('success','添加成功');
         return redirect()->route('menus.index');
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
     }
 
     public function update(Request $request)
