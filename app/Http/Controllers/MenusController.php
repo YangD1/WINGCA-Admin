@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
+// 权限模块 
+use App\Models\Role;
 
 use App\Models\Menu;
 
@@ -50,7 +52,13 @@ class MenusController extends Controller
             'parent_id' => $request->parent_id,
             'menu_lv' => $menu_lv
         ];
-        Menu::create($data);
+        $new_menu = Menu::create($data);
+        if($new_menu->id){
+            // 菜单添加成功更新超级管理员权限
+            $admin_role = Role::find(1);
+            $new_access = $admin_role->access_menus_id.",$new_menu->id";
+            $admin_role->update(['access_menus_id'=>$new_access]);
+        }
         session()->flash('success','添加成功');
         return redirect()->route('menus.index');
     }
