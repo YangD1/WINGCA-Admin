@@ -237,6 +237,7 @@ $('.del-btn').click(function(){
     $('#menu-del').find("input[name='id']").val($(this).data('id'));
 });
 
+//  vue 对象
 let appData = new Vue({
     el: "#menu-info",
     data: {
@@ -257,9 +258,7 @@ let menu_info = function(id){
             $('.pop-background').css('display','flex');
         },
         success: function(data){
-            data = JSON.parse(data);
-            appData.object.id = data.id;
-            appData.object.name = data.name;
+            Vue.set(appData,'object',data); 
             // 默认选中checkbox的默认值
             option_value = "option[value='"+data.parent_id+"']";
             $('#menu-info .menu-group .menu-group-item').find('input').iCheck('uncheck');

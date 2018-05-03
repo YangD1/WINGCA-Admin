@@ -241,7 +241,7 @@ $('.del-btn').click(function(){
     $('#menu-del').find("input[name='id']").val($(this).data('id'));
 });
 
-// 信息变量
+// vue 对象 
 let appData = new Vue({
     el: "#menu-info",
     data: {
@@ -263,10 +263,7 @@ let menu_info = function(id){
             $('.pop-background').css('display','flex');
         },
         success: function(data){
-            data = JSON.parse(data);
-            appData.object.id = data.id;
-            appData.object.name = data.name;
-            appData.object.email = data.email;
+            Vue.set(appData,'object',data); 
             // 默认选中option和select2的默认值
             let option_value = "option[value='"+data.role_id+"']";
             $('#menu-info').find(option_value).attr('selected',true);

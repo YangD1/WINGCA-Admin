@@ -110,7 +110,7 @@ class UsersController extends Controller
         $data = User::find($request->id);
         // 调用权限id
         $data['role_id'] = User::find($request->id)->role ? User::find($request->id)->role->role_id : 0;
-        echo json_encode($data);    
+        return $data;
     }
 
 

@@ -114,6 +114,6 @@ class RolesController extends Controller
     {
         $data = Role::find($request->id);
         $data->access_menus_id = explode(",",$data->access_menus_id);
-        echo json_encode($data);    
+        return $data;
     }
 }
