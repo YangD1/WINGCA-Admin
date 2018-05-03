@@ -7,13 +7,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <div class="btn-group">
-                    <button type="button" data-toggle="modal" data-target="#menu-add" class="btn btn-success">添加用户</button>
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                </div>
+                <button type="button" onclick="_add()" class="btn btn-success">添加用户</button>
             </div>
             <div class="box-body">
                 <div class="table-responsive">
@@ -31,7 +25,7 @@
                             <td>{!! $v->role or "没有选择角色" !!}</td>
                             <td style="min-width: 88px">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-warning" onclick="menu_info( {{ $v->id }} )" >查看</button>
+                                    <button type="button" class="btn btn-sm btn-warning" onclick="_info( {{ $v->id }} )" >查看</button>
                                     <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
@@ -51,89 +45,15 @@
     </div>
 </div>
 
-<!-- 添加弹窗 -->
-<div class="modal fade" id="menu-add">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">添加用户</h4>
-      </div>
-      <form method="post" action="{{ route('users.store') }}">
-      {{ csrf_field() }}
-      <div class="modal-body">
-
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>姓名:</label>
-                    <input type="text" name="name" class="form-control" placeholder="姓名">
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>email:</label>
-                    <input type="text" name="email" class="form-control" placeholder="填写登录邮箱，不可修改请谨慎填写">
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>密码：</label>
-                    <input type="password" name="password" class="form-control" placeholder="填写最少六位数的密码">
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>确认密码：</label>
-                    <input type="password" name="password_confirmation" class="form-control" placeholder="填写最少六位数的密码">
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>用户权限:</label>
-                    <br>
-                    <div class="col-sm-6" style="padding: 0">
-                        <select class="js-example-basic-single" name="role_id">
-                            <option value="0">没有选择角色</option>
-                            @foreach($key_data->get('role_datas') as $v)
-                            <option value="{{ $v->id }}">{{ $v->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-        <button type="submit" class="btn btn-primary">添加</button>
-      </div>
-      </form>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 
 <!-- 查看/修改 弹窗 -->
-<div class="modal fade" id="menu-info">
+<div class="modal fade" id="main-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">【菜单名称】</h4>
+        <h4 class="modal-title"></h4>
       </div>
       <form method="POST" action="{{ route('users.update') }}">
       {{ method_field('PATCH') }}
@@ -195,7 +115,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-        <button type="submit" class="btn btn-success">更新</button>
+        <button type="submit" class="btn btn-success">提交</button>
       </div>
       </form>
     </div>
@@ -243,7 +163,7 @@ $('.del-btn').click(function(){
 
 // vue 对象 
 let appData = new Vue({
-    el: "#menu-info",
+    el: "#main-modal",
     data: {
         object: {
             id: "", 
@@ -253,8 +173,11 @@ let appData = new Vue({
     }
 });
 
+// 公用 modal
+let mel = $('#main-modal');
+
 // 查看菜单项目
-let menu_info = function(id){
+let _info = function(id){
     $.ajax({
         url: "{{ route('users.info') }}",
         data: {id: id},
@@ -263,15 +186,45 @@ let menu_info = function(id){
             $('.pop-background').css('display','flex');
         },
         success: function(data){
+            // 修改公用modal title
+            mel.find('.modal-title').text(`管理 ${data.name}`);
+            // 修改公用modal表单提交地址
+            mel.find('form').attr('action',"{{ route('users.update') }}");
+            // 查看/更新用户禁用 email  input 
+            mel.find('input[name="email"]').attr('disabled',true);
+            // 模拟 patch 请求方式
+            mel.find('form').append(`{{ method_field('patch') }}`);
+            // 设置 vue 对象
             Vue.set(appData,'object',data); 
             // 默认选中option和select2的默认值
             let option_value = "option[value='"+data.role_id+"']";
-            $('#menu-info').find(option_value).attr('selected',true);
+            mel.find(option_value).attr('selected',true);
             $('#menu-update-select').select2("val",[data.role_id]);
-            $('#menu-info').modal();
+            mel.modal();
             $('.pop-background').css('display','none');
         }
     });
+}
+
+// 添加项目
+let _add = function()
+{
+    // 修改公用modal title
+    mel.find('.modal-title').text('添加用户');
+    // 修改公用modal表单提交地址
+    mel.find('form').attr('action',"{{ route('users.create') }}");
+    // 添加用户去除邮箱的 hidden
+    mel.find('input[name="email"]').attr('disabled',false);
+    // 去除提交方式input
+    mel.find('form input[name="_method"]').remove();
+    // 重置 select 的选择
+    mel.find('option').eq(0).attr('seleted',true);
+    $('#menu-update-select').select2("val",[0]);
+    // 清空 vue 对象中的数据
+    let data = {};
+    Vue.set(appData,'object',data); 
+
+    mel.modal();
 }
 
 $(document).ready(function() {

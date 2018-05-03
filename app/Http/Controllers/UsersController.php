@@ -45,7 +45,7 @@ class UsersController extends Controller
     /**
      * 提交创建新用户 
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|max:50',
