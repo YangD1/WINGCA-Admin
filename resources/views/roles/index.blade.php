@@ -13,13 +13,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <div class="btn-group">
-                    <button type="button" data-toggle="modal" data-target="#menu-add" class="btn btn-success">添加角色</button>
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                </div>
+                <button type="button" onclick="_add()" class="btn btn-success">添加角色</button>
             </div>
             <div class="box-body">
                 <div class="table-responsive">
@@ -53,78 +47,8 @@
     </div>
 </div>
 
-<!-- 添加弹窗 -->
-<div class="modal fade" id="menu-add">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">添加角色</h4>
-      </div>
-      <form method="post" action="{{ route('roles.store') }}">
-      {{ csrf_field() }}
-      <div class="modal-body">
-
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>角色名:</label>
-                    <input type="text" name="name" class="form-control" placeholder="角色权限组名称">
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-10">
-                    <label>可操作栏目:</label>
-                    <br>
-                    <div class="col-sm-12 menu-group">
-                        @foreach( $key_data->get('all_menus') as $v )
-                        <div class="menu-group-checkbox">
-                            <div class="menu-group-item">
-                                <input type="checkbox" class="flat-menu" data-lv="{{ $v->menu_lv }}" value="{{ $v->id }}" name="access_menus_id[]">
-                                <label>{{ $v->name }}</label>
-                            </div>
-                            @if( !$v->child_menus->isEmpty() ) @foreach( $v->child_menus as $k => $val )
-                            <div class="child-menu-box">
-                                <div class="menu-group-item menu-child-item">
-                                    <i class="fa fa-arrow-up"></i>
-                                    <input type="checkbox" value="{{ $val->id }}" data-lv="{{ $val->menu_lv }}" class="flat-menu" name="access_menus_id[]">
-                                    <label>{{ $val->name }}</label>
-                                </div>
-                                @if( !$val->son_menus->isEmpty() ) @foreach ( $val->son_menus as $key => $value )
-                                <div class="menu-group-item menu-son-item">
-                                    <i class="fa fa-ellipsis-v" style="margin-right: 9px"></i>
-                                    <i class="fa fa-arrow-up"></i>
-                                    <input type="checkbox" value="{{ $value->id }}" data-lv="{{ $value->menu_lv }}" class="flat-menu" name="access_menus_id[]">
-                                    <label>{{ $value->name }}</label>
-                                </div>
-                                @endforeach @endif
-                            </div>
-                            @endforeach @endif
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-        <button type="submit" class="btn btn-primary">添加</button>
-      </div>
-      </form>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
 <!-- 查看/修改 弹窗 -->
-<div class="modal fade" id="menu-info">
+<div class="modal fade" id="main-modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -191,7 +115,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-        <button type="submit" class="btn btn-success">更新</button>
+        <button type="submit" class="btn btn-success">提交</button>
       </div>
       </form>
     </div>
@@ -239,7 +163,7 @@ $('.del-btn').click(function(){
 
 //  vue 对象
 let appData = new Vue({
-    el: "#menu-info",
+    el: "#main-modal",
     data: {
         object: {
             id: "", 
@@ -247,6 +171,10 @@ let appData = new Vue({
         }
     }
 });
+
+
+//公用modal
+let mel = $('#main-modal');
 
 // 查看菜单项目
 let menu_info = function(id){
@@ -258,11 +186,18 @@ let menu_info = function(id){
             $('.pop-background').css('display','flex');
         },
         success: function(data){
+            // 设置vue对象
             Vue.set(appData,'object',data); 
+            // 修改公用modal title
+            mel.find('.modal-title').text(`管理 ${data.name}`);
+            // 修改公用modal表单提交地址
+            mel.find('form').attr('action',"{{ route('roles.update') }}");
+            // 模拟 patch 请求方式
+            mel.find('form').append(`{{ method_field('patch') }}`);
             // 默认选中checkbox的默认值
             option_value = "option[value='"+data.parent_id+"']";
-            $('#menu-info .menu-group .menu-group-item').find('input').iCheck('uncheck');
-            $('#menu-info .menu-group .menu-group-item').each(function(){
+            $('#main-modal .menu-group .menu-group-item').find('input').iCheck('uncheck');
+            $('#main-modal .menu-group .menu-group-item').each(function(){
                 var that = $(this).find('input');
                 for(var i = 0 ; i < data.access_menus_id.length ; i++){
                     if(that.val() == data.access_menus_id[i]){
@@ -270,10 +205,27 @@ let menu_info = function(id){
                     }
                 }
             });
-            $('#menu-info').modal(); 
+            mel.modal(); 
             $('.pop-background').css('display','none');
         }
     });
+}
+
+// 添加 modal
+let _add = function(id){
+    console.log('点击了modal');
+    // 修改公用modal title
+    mel.find('.modal-title').text('添加角色');
+    // 修改公用modal表单提交地址
+    mel.find('form').attr('action',"{{ route('roles.create') }}");
+    // 去除提交方式input
+    mel.find('form input[name="_method"]').remove();
+    // 去除选中的checkbox
+    mel.find('input').iCheck('uncheck');
+    // 清空 vue 对象中的数据
+    let data = {};
+    Vue.set(appData,'object',data); 
+    mel.modal(); 
 }
 
 $(document).ready(function() {

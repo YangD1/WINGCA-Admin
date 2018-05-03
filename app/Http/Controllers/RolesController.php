@@ -44,7 +44,7 @@ class RolesController extends Controller
     /**
      * 创建权限提交(http:post)
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         //
        $this->validate($request, [
@@ -58,7 +58,7 @@ class RolesController extends Controller
         $data['name'] = $request->name;
         
         if($request->access_menus_id){
-            $data['access_menus_id'] = $request->access_menus_id;
+            $data['access_menus_id'] = implode(',',$request->access_menus_id);
         }
 
         Role::create($data);
