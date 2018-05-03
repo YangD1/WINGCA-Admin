@@ -29,7 +29,7 @@ class GetMenu
                     $value->son_menus = Menu::whereRaw("parent_id = ?",[$value->id])->get();  
                 }
             }
-            $request->menus = $parent_menus;
+            session()->put('menus',$parent_menus);
         }
         return $next($request);
     }

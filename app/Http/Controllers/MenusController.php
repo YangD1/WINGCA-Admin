@@ -27,7 +27,6 @@ class MenusController extends Controller
     {
 
         $key_data = collect([
-            'menus' => $request->menus,
             'active' => "menus",
             'datas' => Menu::paginate(14),
             'parent_data' => Menu::whereRaw('menu_lv < 3')->get(),

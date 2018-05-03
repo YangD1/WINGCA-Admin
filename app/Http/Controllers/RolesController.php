@@ -32,7 +32,6 @@ class RolesController extends Controller
             }
         } 
         $key_data = collect([
-            'menus' => $request->menus,
             'all_menus' => $allMenus,
             'active' => "roles",
             'datas' => Role::paginate(14),

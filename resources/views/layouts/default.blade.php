@@ -224,7 +224,7 @@ $.ajaxSetup({
         </li>
         <!-- 自定义项目 -->
         <li class="header">功能菜单</li>
-        @foreach( $key_data->get('menus') as $v )
+        @foreach( session()->get('menus') as $v )
             @if(!$v->child_menus->isEmpty())
             <li class="treeview">
               <a href="{{ $v->url }}">

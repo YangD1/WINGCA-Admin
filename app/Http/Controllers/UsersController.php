@@ -34,7 +34,6 @@ class UsersController extends Controller
             }
         }
         $key_data = collect([
-            'menus' => $request->menus,
             'active' => "users",
             'datas' => $datas,
             'role_datas' => Role::all()
