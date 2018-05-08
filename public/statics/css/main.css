@@ -233,3 +233,9 @@ body {
 .dropzone .dz-preview {
     margin: 0 !important;
 }
+
+@media (min-width: 768px) {
+    .table-responsive {
+        overflow: inherit;
+    }
+}
