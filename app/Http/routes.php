@@ -72,6 +72,7 @@ Route::group(['prefix' => 'admin'],function(){
     
         // 菜单信息(ajax) 
         Route::post('menu_info','MenusController@menu_info')->name('menus.info');
+        Route::post('menuBatchDel','MenusController@menuBatchDel')->name('menus.menuBatchDel');
     });
 
     

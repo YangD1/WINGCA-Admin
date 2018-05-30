@@ -27,10 +27,18 @@ class MenusController extends Controller
      */
     public function index(Request $request)
     {
-
+        $menus = Menu::paginate(14);
+        foreach($menus as $k=>$v) {
+            if($v->parent_id == 0){
+                $menus[$k]['parent_name'] = "一级菜单";
+            }else{
+                $parent_name =  Menu::find($v->parent_id,['name']);
+                $menus[$k]['parent_name'] = !empty($parent_name) ? $parent_name->name : "未找到相关的父级信息";
+            }
+        }
         $key_data = collect([
             'active' => "menus",
-            'datas' => Menu::paginate(14),
+            'datas' => $menus,
             'parent_data' => Menu::whereRaw('menu_lv < 3')->get(),
         ]);
 
@@ -111,4 +119,15 @@ class MenusController extends Controller
         return $data;
      }
 
+     /**
+      * 批量删除菜单
+      */
+      public function menuBatchDel(Request $request)
+      {
+        foreach($request->checkmenus as $v){
+            Menu::find($v)->delete();
+        }
+        session()->flash('success','删除成功');
+        return redirect()->route('menus.index');
+      }
 }
