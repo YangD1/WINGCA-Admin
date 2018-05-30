@@ -3,6 +3,11 @@
 @section('pageHeader','系统设置')
 @section('pageSmallHeader','用户管理')
 @section('content')
+
+<!-- icheck -->
+<link rel="stylesheet" href="/statics/plugin/AdminLTE/plugins/iCheck/all.css">
+<script src="/statics/plugin/AdminLTE/plugins/iCheck/icheck.min.js"></script>
+
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -11,14 +16,20 @@
             </div>
             <div class="box-body">
                 <div class="table-responsive">
+                <form action="{{ route('user.usersBatchDel') }}" method="post">
+                    {{ csrf_field() }}
                     <table id="users" class="table table-bordered table-hover " >
                         <th rowspan="1" colspan="1">#</th>
+                        <th rowspan="1" colspan="1">id</th>
                         <th rowspan="1" colspan="1">用户名</th>
                         <th rowspan="1" colspan="1">e-mail</th>
                         <th rowspan="1" colspan="1">当前权限</th>
                         <th rowspan="1" colspan="1">操作</th>
                         @foreach($key_data->get('datas') as $v)
                         <tr role="row" >
+                            <td>
+                                <input class="flat-blue this-page-user" type="checkbox" value="{{ $v->id }}" name="checkusers[]">
+                            </td>
                             <td>{{ $v->id }}</td>
                             <td>{{ $v->name }}</td>
                             <td>{{ $v->email }}</td>
@@ -40,6 +51,21 @@
                     </table>
                     {!! $key_data->get('datas')->render() !!}
                 </div>
+                <div class="btn-group">
+                    <a href="#0" class="btn btn-default btn-sm" id="checkThisPageUsers">全选/反选</a>
+                    <a href="#0" type="button" class="btn btn-sm btn-default" >操作</button>
+                    <a href="#0" type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" style="text-align: center">
+                        <li>
+                            <a href="#0">
+                                <button class="btn btn-sm btn-danger" style="width: 100%;" type="submit">删除</button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -67,7 +93,7 @@
                 <div class="col-sm-1"></div>
                 <div class="col-sm-10">
                     <label>名称:</label>
-                    <input type="text" name="name" v-bind:value="object.name" class="form-control" placeholder="菜单名称">
+                    <input type="text" name="name" v-bind:value="object.name" class="form-control" placeholder="用户名">
                 </div>
                 <div class="col-sm-1"></div>
             </div>
@@ -229,6 +255,22 @@ let _add = function()
 
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
+
+    $(".flat-blue").iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue',
+        increaseArea: '20%' // optional
+    });
+});
+
+// icheck 全选/反选 操作
+$('#checkThisPageUsers').click(function(){
+    $(this).toggleClass("selected");
+    if($(this).hasClass("selected")){
+        $('.this-page-user').iCheck('check');
+    }else{
+        $('.this-page-user').iCheck('uncheck');
+    }
 });
 </script>
 

@@ -125,4 +125,17 @@ class UsersController extends Controller
         session()->flash('success','删除成功');
         return redirect()->route('users.index');
     }
+
+    public function usersBatchDel(Request $request)
+    {
+        foreach($request->checkusers as $v)
+        {
+            // 先删除相关的权限信息
+            User::find($v)->role()->delete();
+            // 删除用户
+            User::find($v)->delete();        
+        }
+        session()->flash('success','删除成功');
+        return redirect()->route('users.index');
+    }
 }

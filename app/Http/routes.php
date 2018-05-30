@@ -61,6 +61,10 @@ Route::group(['prefix' => 'admin'],function(){
         // 用户自我管理
         Route::get('edit/{id}','userManageController@edit')->name('user.edit');
         Route::patch('update/{id}','userManageController@update')->name('user.update');
+
+        // 用户批量管理
+        // 用户批量删除
+        Route::post('usersBatchDel','UsersController@usersBatchDel')->name('user.usersBatchDel');
     });
 
     # 菜单管理路由(Model: App/Models/Menu)
